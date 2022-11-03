@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://oracle.developpez.com/guide/sauvegarde/rman/ -->
+<html lang="fr" prefix="og: http://ogp.me/ns#"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Présentation de l'outil RMAN d'Oracle.</title>
+	<link rel="canonical" href="https://oracle.developpez.com/guide/sauvegarde/rman/">
+	<meta name="generator" content="developpez-com">
+	<meta name="description" content="Présentation de l&#39;outil RMAN d&#39;Oracle .">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Présentation de l&#39;outil RMAN d&#39;Oracle.">
+	<meta property="og:image" content="https://www.developpez.com/template/images/logo.png">
+	<meta property="og:url" content="https://oracle.developpez.com/guide/sauvegarde/rman/">
+	<meta property="og:locale" content="fr_FR">
+	<meta property="og:site_name" content="Developpez.com">
+	<meta property="twitter:card" content="summary">
+	<meta property="twitter:url" content="https://oracle.developpez.com/guide/sauvegarde/rman/">
+	<meta property="twitter:description" content="Présentation de l&#39;outil RMAN d&#39;Oracle .">
+	<meta property="twitter:title" content="Présentation de l&#39;outil RMAN d&#39;Oracle.">
+	<meta property="twitter:image" content="https://www.developpez.com/template/images/logo.png">
+	<script async="" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/ga.js.download"></script><script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/jquery-3.4.1.js.download"></script>
+	<script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/popper.js.download"></script>
+	<script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/bootstrap.bundle.min.js.download"></script>
+	<script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/bootstrap.js.download"></script>
+	<link rel="stylesheet" href="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/bootstrap.css">
+	<link rel="stylesheet" href="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/bootstrap-social.css">
+	<link rel="stylesheet" href="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/all.min.css">
+	<link rel="stylesheet" href="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/fontawesome.min.css">
+	<script async="" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/compteurarticle"></script>
+	<script async="" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/saved_resource"></script>
+	<script async="async" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/gpt.js.download"></script>
+	<script>
+		var googletag = googletag || {};
+		googletag.cmd = googletag.cmd || [];
+	</script>
+	<script async="" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/f.txt"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="https://oracle.developpez.com/favicon.ico">
+	<link rel="image_src" href="https://www.developpez.com/facebook-icon.png">
+	<link rel="stylesheet" type="text/css" href="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/gabarit.css">
+	<link rel="stylesheet" type="text/css" media="print" href="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/printer.css">
+	<script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/gabarit.js.download"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/developpez-kit-generation.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/code.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/lightbox.css">
+	<script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/developpez-kit-generation.js.download"></script>
+	<script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/lightbox.js.download"></script>
+	<script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/fonctions-kit.js.download"></script>
+	<meta name="author" content="gregory.broissard">
+	<!--[if lt IE 9]>
+	<script src="/template/kit/html5_ie.js"></script>
+	<![endif]-->
+	<!--[if IE 9]><link rel="stylesheet" type="text/css" href="/template/kit/ie9.css" /><![endif]-->
+	<!--[if IE 8]><link rel="stylesheet" type="text/css" href="/template/kit/ie8.css" /><![endif]-->
+	<!--[if lt IE 9]><link rel="stylesheet" type="text/css" href="/template/kit/ie.css" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="/template/kit/ie7.css" /><![endif]-->
+	<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="/template/kit/ie6.css" /><![endif]-->
+	<!--[if lt IE 9]><script type="text/javascript" src="/template/kit/html5_ie.js"></script><![endif]-->
+
+<style type="text/css">.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q{display:block!important;border:1px solid #cdcfd2!important;background-color:#fff!important;color:#373a3d!important;width:100vw!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-24GeGuJgk9LrMLp7qVvlyz{background:#6a7e89!important;color:#fff!important;padding:10px!important;font-size:18px!important;font-family:sans-serif!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-KVjdulkCFfUZps29EbgAC{background:#f3f6f8!important;border-bottom:1px solid #cdcfd2!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-KVjdulkCFfUZps29EbgAC>*{margin-right:10px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1OeZ2PQ98oAp6Vc5mMc6V5{list-style:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-vCwYmWF_l83ScZBrGnRoi,.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1OeZ2PQ98oAp6Vc5mMc6V5{margin:0!important;padding:0!important;width:100%!important;display:block!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-vCwYmWF_l83ScZBrGnRoi:not(:last-child){border-bottom:1px solid #cdcfd2!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1XQZkb-FlHWABUp4_uShaZ{color:inherit!important;cursor:pointer!important;width:100%!important;display:inline-block!important;margin:10px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1XTzMvb2XKitWz0mFLlyyp{margin:5px!important;display:block!important;width:auto!important;white-space:pre!important;overflow-x:scroll!important;background:inherit!important;color:inherit!important;font-family:monospace}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1XTzMvb2XKitWz0mFLlyyp:not(.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-39QUvFFn5B7GMcqMQkOXZ3){display:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-295DY3nO0DbJWMsOqmjCli{background:#f5f5f5!important;color:#5a5a5a!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1aQZwu6CUzAf2zUcI7tg0Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-295DY3nO0DbJWMsOqmjCli{display:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-38EPFyKXMtoP12rPlmrHxs{background:#e6f7ff!important;color:#006097!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3W4ZnQjhoGfT1gTNcqRXdi .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-38EPFyKXMtoP12rPlmrHxs{display:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-HGYnfzlmgOZ-l7eANhQe_{background:#fff3ea!important;color:#993a00!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-24e52A11B1UIErbKHtBmqc .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-HGYnfzlmgOZ-l7eANhQe_{display:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-jji74ZzulHScD0OAD_G7h{background:#fef2f1!important;color:#b10823!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-28jAOA7cDee-95LvwGsOP- .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-jji74ZzulHScD0OAD_G7h{display:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu{background-color:#0073b1!important;border:0!important;border-radius:2px!important;box-sizing:border-box!important;color:#fff!important;cursor:pointer!important;display:inline-block!important;font-family:-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Fira Sans,Ubuntu,Oxygen,Oxygen Sans,Cantarell,Droid Sans,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Lucida Grande,Helvetica,Arial,sans-serif!important;font-weight:600!important;overflow:hidden!important;outline-width:2px!important;position:relative!important;text-align:center!important;text-decoration:none!important;vertical-align:middle!important;white-space:nowrap!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu:disabled{cursor:not-allowed!important;opacity:.7!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu:not(:disabled):not(.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1zhzkayakwEXovVYUbq5Gy):hover{background-color:#006097!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu:not(:disabled):not(.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1zhzkayakwEXovVYUbq5Gy):active{background-color:#004b7c!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1zhzkayakwEXovVYUbq5Gy{background-color:#fff!important;color:#0073b1!important;box-shadow:inset 0 0 0 1px rgba(0,0,0,.3)!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1zhzkayakwEXovVYUbq5Gy:not(:disabled):hover{color:#006097!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1zhzkayakwEXovVYUbq5Gy:not(:disabled):active{color:#004b7c!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu>xdoor-icon{display:inline-block!important;height:100%!important;vertical-align:top!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu>xdoor-icon>svg{pointer-events:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-7inSbaAsvG5bf7w6lJTEr{font-size:10px!important;height:16px!important;line-height:16px!important;padding:0 6px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-7inSbaAsvG5bf7w6lJTEr>xdoor-icon{margin-left:-6px!important;margin-right:3px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-7inSbaAsvG5bf7w6lJTEr>xdoor-icon>svg{height:16px!important;width:16px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-7inSbaAsvG5bf7w6lJTEr.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-2lrEjt4SOTxqrYsv1piG4c>xdoor-icon{margin-right:-6px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu,.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3uCBSbQNVNf2QjqHe1rfb6{font-size:11px!important;height:20px!important;line-height:20px!important;padding:0 7px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3uCBSbQNVNf2QjqHe1rfb6>xdoor-icon,.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu>xdoor-icon{margin-left:-7px!important;margin-right:3.5px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3uCBSbQNVNf2QjqHe1rfb6>xdoor-icon>svg,.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu>xdoor-icon>svg{height:20px!important;width:20px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3uCBSbQNVNf2QjqHe1rfb6.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-2lrEjt4SOTxqrYsv1piG4c>xdoor-icon,.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-2lrEjt4SOTxqrYsv1piG4c>xdoor-icon{margin-right:-7px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-21Smv9YG-5V6M6KP-5v2WG{font-size:14px!important;height:24px!important;line-height:24px!important;padding:0 12px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-21Smv9YG-5V6M6KP-5v2WG>xdoor-icon{margin-left:-12px!important;margin-right:6px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-21Smv9YG-5V6M6KP-5v2WG>xdoor-icon>svg{height:24px!important;width:24px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-21Smv9YG-5V6M6KP-5v2WG.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-2lrEjt4SOTxqrYsv1piG4c>xdoor-icon{margin-right:-12px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1TGdQUTLZdNG4R87OfAB-q{font-size:16px!important;height:32px!important;line-height:32px!important;padding:0 16px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1TGdQUTLZdNG4R87OfAB-q>xdoor-icon{margin-left:-16px!important;margin-right:8px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1TGdQUTLZdNG4R87OfAB-q>xdoor-icon>svg{height:32px!important;width:32px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1TGdQUTLZdNG4R87OfAB-q.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-2lrEjt4SOTxqrYsv1piG4c>xdoor-icon{margin-right:-16px!important}</style><style type="text/css">.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q{display:block!important;border:1px solid #cdcfd2!important;background-color:#fff!important;color:#373a3d!important;width:100vw!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-24GeGuJgk9LrMLp7qVvlyz{background:#6a7e89!important;color:#fff!important;padding:10px!important;font-size:18px!important;font-family:sans-serif!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-KVjdulkCFfUZps29EbgAC{background:#f3f6f8!important;border-bottom:1px solid #cdcfd2!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-KVjdulkCFfUZps29EbgAC>*{margin-right:10px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1OeZ2PQ98oAp6Vc5mMc6V5{list-style:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-vCwYmWF_l83ScZBrGnRoi,.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1OeZ2PQ98oAp6Vc5mMc6V5{margin:0!important;padding:0!important;width:100%!important;display:block!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-vCwYmWF_l83ScZBrGnRoi:not(:last-child){border-bottom:1px solid #cdcfd2!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1XQZkb-FlHWABUp4_uShaZ{color:inherit!important;cursor:pointer!important;width:100%!important;display:inline-block!important;margin:10px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1XTzMvb2XKitWz0mFLlyyp{margin:5px!important;display:block!important;width:auto!important;white-space:pre!important;overflow-x:scroll!important;background:inherit!important;color:inherit!important;font-family:monospace}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1XTzMvb2XKitWz0mFLlyyp:not(.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-39QUvFFn5B7GMcqMQkOXZ3){display:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-295DY3nO0DbJWMsOqmjCli{background:#f5f5f5!important;color:#5a5a5a!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1aQZwu6CUzAf2zUcI7tg0Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-295DY3nO0DbJWMsOqmjCli{display:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-38EPFyKXMtoP12rPlmrHxs{background:#e6f7ff!important;color:#006097!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3W4ZnQjhoGfT1gTNcqRXdi .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-38EPFyKXMtoP12rPlmrHxs{display:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-HGYnfzlmgOZ-l7eANhQe_{background:#fff3ea!important;color:#993a00!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-24e52A11B1UIErbKHtBmqc .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-HGYnfzlmgOZ-l7eANhQe_{display:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-jji74ZzulHScD0OAD_G7h{background:#fef2f1!important;color:#b10823!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3npS60y-EvfF7G_lioSx2Q.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-28jAOA7cDee-95LvwGsOP- .IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-jji74ZzulHScD0OAD_G7h{display:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu{background-color:#0073b1!important;border:0!important;border-radius:2px!important;box-sizing:border-box!important;color:#fff!important;cursor:pointer!important;display:inline-block!important;font-family:-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Fira Sans,Ubuntu,Oxygen,Oxygen Sans,Cantarell,Droid Sans,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Lucida Grande,Helvetica,Arial,sans-serif!important;font-weight:600!important;overflow:hidden!important;outline-width:2px!important;position:relative!important;text-align:center!important;text-decoration:none!important;vertical-align:middle!important;white-space:nowrap!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu:disabled{cursor:not-allowed!important;opacity:.7!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu:not(:disabled):not(.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1zhzkayakwEXovVYUbq5Gy):hover{background-color:#006097!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu:not(:disabled):not(.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1zhzkayakwEXovVYUbq5Gy):active{background-color:#004b7c!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1zhzkayakwEXovVYUbq5Gy{background-color:#fff!important;color:#0073b1!important;box-shadow:inset 0 0 0 1px rgba(0,0,0,.3)!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1zhzkayakwEXovVYUbq5Gy:not(:disabled):hover{color:#006097!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1zhzkayakwEXovVYUbq5Gy:not(:disabled):active{color:#004b7c!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu>xdoor-icon{display:inline-block!important;height:100%!important;vertical-align:top!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu>xdoor-icon>svg{pointer-events:none!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-7inSbaAsvG5bf7w6lJTEr{font-size:10px!important;height:16px!important;line-height:16px!important;padding:0 6px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-7inSbaAsvG5bf7w6lJTEr>xdoor-icon{margin-left:-6px!important;margin-right:3px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-7inSbaAsvG5bf7w6lJTEr>xdoor-icon>svg{height:16px!important;width:16px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-7inSbaAsvG5bf7w6lJTEr.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-2lrEjt4SOTxqrYsv1piG4c>xdoor-icon{margin-right:-6px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu,.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3uCBSbQNVNf2QjqHe1rfb6{font-size:11px!important;height:20px!important;line-height:20px!important;padding:0 7px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3uCBSbQNVNf2QjqHe1rfb6>xdoor-icon,.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu>xdoor-icon{margin-left:-7px!important;margin-right:3.5px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3uCBSbQNVNf2QjqHe1rfb6>xdoor-icon>svg,.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu>xdoor-icon>svg{height:20px!important;width:20px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-3uCBSbQNVNf2QjqHe1rfb6.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-2lrEjt4SOTxqrYsv1piG4c>xdoor-icon,.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-2lrEjt4SOTxqrYsv1piG4c>xdoor-icon{margin-right:-7px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-21Smv9YG-5V6M6KP-5v2WG{font-size:14px!important;height:24px!important;line-height:24px!important;padding:0 12px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-21Smv9YG-5V6M6KP-5v2WG>xdoor-icon{margin-left:-12px!important;margin-right:6px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-21Smv9YG-5V6M6KP-5v2WG>xdoor-icon>svg{height:24px!important;width:24px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-21Smv9YG-5V6M6KP-5v2WG.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-2lrEjt4SOTxqrYsv1piG4c>xdoor-icon{margin-right:-12px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1TGdQUTLZdNG4R87OfAB-q{font-size:16px!important;height:32px!important;line-height:32px!important;padding:0 16px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1TGdQUTLZdNG4R87OfAB-q>xdoor-icon{margin-left:-16px!important;margin-right:8px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1TGdQUTLZdNG4R87OfAB-q>xdoor-icon>svg{height:32px!important;width:32px!important}.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1TGdQUTLZdNG4R87OfAB-q.IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-2lrEjt4SOTxqrYsv1piG4c>xdoor-icon{margin-right:-16px!important}</style><meta http-equiv="origin-trial" content="A+cA2PUOfIOKAdSDJOW5CP9ZlxONy1yu+hqAq72zUtKw4rLdihqRp6Nui/jUyCyegr+BUtH+C+Elv0ufn05yBQEAAACFeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A+zsdH3aNZT/bkjT8U/o5ACzyaeNYzTvtoVmwf/KOilfv39pxY2AIsOwhQJv+YnXp98i3TqrQibIVtMWs5UHjgoAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="AxceVEhIegcDEHqLXFQ2+vPKqzCppoJYsRCZ/BdfVnbM/sUUF2BXV8lwNosyYjvoxnTh2FC8cOlAnA5uULr/zAUAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/pubads_impl_2022100501.js.download" async=""></script><meta http-equiv="origin-trial" content="A+cA2PUOfIOKAdSDJOW5CP9ZlxONy1yu+hqAq72zUtKw4rLdihqRp6Nui/jUyCyegr+BUtH+C+Elv0ufn05yBQEAAACFeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A+zsdH3aNZT/bkjT8U/o5ACzyaeNYzTvtoVmwf/KOilfv39pxY2AIsOwhQJv+YnXp98i3TqrQibIVtMWs5UHjgoAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="AxceVEhIegcDEHqLXFQ2+vPKqzCppoJYsRCZ/BdfVnbM/sUUF2BXV8lwNosyYjvoxnTh2FC8cOlAnA5uULr/zAUAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="></head>
+<body>
+	<header>
+
+	<div id="gabarit_b1">
+		<div id="gabarit_connexion">
+	<form>
+		<div><span>Identifiant</span><input type="text" class="form_input form-control" id="formloginConnexion"><span>Mot de passe</span><input type="password" class="form_input form-control" id="formpassConnexion"><input type="button" value="Connexion" id="formbuttonConnexion" class="btn btn-primary"><div id="loadingConnexion" class="spinner-border text-light" role="status"><span class="sr-only">Loading...</span></div></div><a id="mdpoublier" href="http://www.developpez.net/forums/login.php?do=lostpw">Mot de passe oublié ?</a><a id="inscriptionConnexion" href="https://www.developpez.net/forums/inscription/" class="btn btn-primary">Je m'inscris ! (gratuit)</a>	
+	</form>
+</div>		<div id="gabarit-barreRecherche" style="display:none;"><form action="https://www.google.fr/" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-8110924381468607:6449306375">
+    <input type="hidden" name="ie" value="UTF-8">
+    <input type="text" name="q" size="12">
+    <input type="submit" name="sa" value="Rechercher">
+  </div>
+</form></div>
+<div id="gabarit-new-logo" role="gabarit-accueil">
+	<a href="https://www.developpez.com/"><img src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/logo-dvp-h55.png" alt="logo dvp" width="48" height="55"></a>
+	<a href="https://www.developpez.com/"><span class="dvp"></span></a>
+	<span class="triangle"></span>
+</div>
+<div id="gabarit_recherche">
+	<div class="gabarit-btn-menu profil" role="gabarit-profil"></div>
+	<div class="gabarit-btn-menu profil dn" role="gabarit-connecter"><span></span><a id="gabaritRepereLogout" class="btn btn-primary"></a></div>
+	<div class="gabarit-btn-menu contacts" role="gabarit-contacts"></div>
+	<div class="gabarit-btn-menu recherche" role="gabarit-recherche"></div>
+</div>
+
+<div id="gabarit_superieur">
+	<nav>
+	<ul>
+		<li><a href="https://www.developpez.net/forums/" title="">Forums</a></li>
+		<li><a href="https://general.developpez.com/cours/" title="">Tutoriels</a></li>
+		<li><a href="https://general.developpez.com/faq/" title="">FAQ</a></li>
+		<li><a href="https://www.developpez.net/forums/blogs/" title="">Blogs</a></li>
+		<li><a href="https://chat.developpez.com/" title="">Chat</a></li>
+		<li><a href="https://www.developpez.com/newsletter/">Newsletter</a></li>
+		<li><a href="https://emploi.developpez.com/" title="">Emploi</a></li>
+		<li><a href="https://etudes.developpez.com/">Études</a></li>
+		<li><a href="https://droit.developpez.com/" title="">Droit</a></li>
+		<li><a href="https://club.developpez.com/">Club</a></li>
+	</ul>
+	</nav>
+</div>	</div>
+	<nav>
+
+<ul id="gabarit_menu" style="padding-left:56px;">
+	<li><a href="https://www.developpez.com/" data-idrub="1" data-niv="1" style="padding:0;"><div id="gabarit_home"></div></a>
+			</li>
+	<li><a href="https://solutions-entreprise.developpez.com/" data-idrub="86" data-niv="1">DI/DSI Solutions d'entreprise<!----></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://solutions-entreprise.developpez.com/" data-idrub="86" data-niv="2">DI/DSI Solutions d'entreprise</a></li>
+				<li><a href="https://abbyy.developpez.com/" data-idrub="147" data-niv="2">ABBYY</a></li>
+				<li><a href="https://big-data.developpez.com/" data-idrub="126" data-niv="2">Big Data</a></li>
+				<li><a href="https://bpm.developpez.com/" data-idrub="134" data-niv="2">BPM</a></li>
+				<li><a href="https://business-intelligence.developpez.com/" data-idrub="61" data-niv="2">Business Intelligence</a></li>
+				<li><a href="https://data-science.developpez.com/" data-idrub="151" data-niv="2">Data Science</a></li>
+				<li><a href="https://solutions-entreprise.developpez.com/erp-pgi/presentation-erp-pgi/" data-idrub="91" data-niv="2">ERP / PGI</a></li>
+				<li><a href="https://crm.developpez.com/" data-idrub="92" data-niv="2">CRM</a></li>
+				<li><a href="https://sas.developpez.com/" data-idrub="93" data-niv="2">SAS</a></li>
+				<li><a href="https://sap.developpez.com/" data-idrub="106" data-niv="2">SAP</a></li>
+				<li><a href="https://www.developpez.net/forums/f1664/systemes/windows/windows-serveur/biztalk-server/" data-idrub="115" data-niv="2">Microsoft BizTalk Server</a></li>
+				<li><a href="https://talend.developpez.com/" data-idrub="118" data-niv="2">Talend</a></li>
+				<li><a href="https://droit.developpez.com/" data-idrub="132" data-niv="2">Droit informatique et entreprise</a></li>
+			</ul></li>
+	<li><a href="https://cloud-computing.developpez.com/" data-idrub="103" data-niv="1">Cloud<!----></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://cloud-computing.developpez.com/" data-idrub="103" data-niv="2">Cloud Computing</a></li>
+				<li><a href="https://oracle.developpez.com/" data-idrub="25" data-niv="2">Oracle</a></li>
+				<li><a href="https://windows-azure.developpez.com/" data-idrub="107" data-niv="2">Azure</a></li>
+				<li><a href="https://ibmcloud.developpez.com/" data-idrub="135" data-niv="2">IBM Cloud</a></li>
+			</ul></li>
+	<li><a href="https://intelligence-artificielle.developpez.com/" data-idrub="143" data-niv="1">IA<!----></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://intelligence-artificielle.developpez.com/" data-idrub="143" data-niv="2">Intelligence artificielle</a></li>
+			</ul></li>
+	<li><a href="https://alm.developpez.com/" data-idrub="42" data-niv="1">ALM<!--<span class="gabarit_tooltip">Cycle de vie du logiciel</span>--></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://alm.developpez.com/" data-idrub="42" data-niv="2">ALM</a></li>
+				<li><a href="https://agile.developpez.com/" data-idrub="146" data-niv="2">Agile</a></li>
+				<li><a href="https://merise.developpez.com/" data-idrub="43" data-niv="2">Merise</a></li>
+				<li><a href="https://uml.developpez.com/" data-idrub="12" data-niv="2">UML</a></li>
+			</ul></li>
+	<li><a href="https://microsoft.developpez.com/" data-idrub="150" data-niv="1">Microsoft<!----></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://microsoft.developpez.com/" data-idrub="150" data-niv="2">Microsoft</a></li>
+				<li><a href="https://dotnet.developpez.com/" data-idrub="20" data-niv="2">.NET</a></li>
+				<li><a href="https://office.developpez.com/" data-idrub="54" data-niv="2">Microsoft Office</a></li>
+				<li><a href="https://visualstudio.developpez.com/" data-idrub="84" data-niv="2">Visual Studio</a></li>
+				<li><a href="https://windows.developpez.com/" data-idrub="17" data-niv="2">Windows</a></li>
+				<li><a href="https://dotnet.developpez.com/aspnet/" data-idrub="83" data-niv="2">ASP.NET</a></li>
+				<li><a href="https://dotnet.developpez.com/csharp/" data-idrub="81" data-niv="2">C#</a></li>
+				<li><a href="https://dotnet.developpez.com/vbnet/" data-idrub="82" data-niv="2">VB.NET</a></li>
+				<li><a href="https://windows-azure.developpez.com/" data-idrub="107" data-niv="2">Azure</a></li>
+			</ul></li>
+	<li><a href="https://java.developpez.com/" data-idrub="4" data-niv="1">Java<!--<span class="gabarit_tooltip">Plateforme et langage Java</span>--></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://java.developpez.com/" data-idrub="4" data-niv="2">Java</a></li>
+				<li><a href="https://javaweb.developpez.com/" data-idrub="97" data-niv="2">Java Web</a></li>
+				<li><a href="https://spring.developpez.com/" data-idrub="87" data-niv="2">Spring</a></li>
+				<li><a href="https://android.developpez.com/" data-idrub="95" data-niv="2">Android</a></li>
+				<li><a href="https://eclipse.developpez.com/" data-idrub="55" data-niv="2">Eclipse</a></li>
+				<li><a href="https://netbeans.developpez.com/" data-idrub="66" data-niv="2">NetBeans</a></li>
+			</ul></li>
+	<li><a href="https://web.developpez.com/" data-idrub="8" data-niv="1">Dév. Web<!--<span class="gabarit_tooltip">Développement Web et Webmarketing</span>--></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://web.developpez.com/" data-idrub="8" data-niv="2">Développement et hébergement Web</a></li>
+				<li><a href="https://ajax.developpez.com/" data-idrub="85" data-niv="2">AJAX</a></li>
+				<li><a href="https://apache.developpez.com/" data-idrub="71" data-niv="2">Apache</a></li>
+				<li><a href="https://asp.developpez.com/" data-idrub="10" data-niv="2">ASP</a></li>
+				<li><a href="https://css.developpez.com/" data-idrub="51" data-niv="2">CSS</a></li>
+				<li><a href="https://dart.developpez.com/" data-idrub="125" data-niv="2">Dart</a></li>
+				<li><a href="https://flash.developpez.com/" data-idrub="41" data-niv="2">Flash / Flex</a></li>
+				<li><a href="https://javascript.developpez.com/" data-idrub="45" data-niv="2">JavaScript</a></li>
+				<li><a href="https://nodejs.developpez.com/" data-idrub="141" data-niv="2">NodeJS</a></li>
+				<li><a href="https://php.developpez.com/" data-idrub="9" data-niv="2">PHP</a></li>
+				<li><a href="https://ruby.developpez.com/" data-idrub="53" data-niv="2">Ruby &amp; Rails</a></li>
+				<li><a href="https://typescript.developpez.com/" data-idrub="127" data-niv="2">TypeScript</a></li>
+				<li><a href="https://web-semantique.developpez.com/" data-idrub="111" data-niv="2">Web sémantique</a></li>
+				<li><a href="https://webmarketing.developpez.com/" data-idrub="80" data-niv="2">Webmarketing</a></li>
+				<li><a href="https://xhtml.developpez.com/" data-idrub="50" data-niv="2">(X)HTML</a></li>
+			</ul></li>
+	<li><a href="https://edi.developpez.com/" data-idrub="90" data-niv="1">EDI<!--<span class="gabarit_tooltip">Environnements de Développement Intégré</span>--></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://edi.developpez.com/" data-idrub="90" data-niv="2">EDI</a></li>
+				<li><a href="https://4d.developpez.com/" data-idrub="39" data-niv="2">4D</a></li>
+				<li><a href="https://delphi.developpez.com/" data-idrub="2" data-niv="2">Delphi</a></li>
+				<li><a href="https://eclipse.developpez.com/" data-idrub="55" data-niv="2">Eclipse</a></li>
+				<li><a href="https://jetbrains.developpez.com/" data-idrub="144" data-niv="2">JetBrains</a></li>
+				<li><a href="https://labview.developpez.com/" data-idrub="72" data-niv="2">LabVIEW</a></li>
+				<li><a href="https://netbeans.developpez.com/" data-idrub="66" data-niv="2">NetBeans</a></li>
+				<li><a href="https://matlab.developpez.com/" data-idrub="58" data-niv="2">MATLAB</a></li>
+				<li><a href="https://scilab.developpez.com/" data-idrub="120" data-niv="2">Scilab</a></li>
+				<li><a href="https://visualstudio.developpez.com/" data-idrub="84" data-niv="2">Visual Studio</a></li>
+				<li><a href="https://wind.developpez.com/" data-idrub="74" data-niv="2">WinDev</a></li>
+				<li><a href="https://vb.developpez.com/" data-idrub="5" data-niv="2">Visual Basic 6</a></li>
+				<li><a href="https://lazarus.developpez.com/" data-idrub="96" data-niv="2">Lazarus</a></li>
+				<li><a href="https://qt-creator.developpez.com/" data-idrub="109" data-niv="2">Qt Creator</a></li>
+			</ul></li>
+	<li><a href="https://programmation.developpez.com/" data-idrub="119" data-niv="1">Programmation<!--<span class="gabarit_tooltip">Programmation et langages de programmation applicatifs</span>--></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://programmation.developpez.com/" data-idrub="119" data-niv="2">Programmation</a></li>
+				<li><a href="https://algo.developpez.com/" data-idrub="47" data-niv="2">Débuter - Algorithmique</a></li>
+				<li><a href="https://jeux.developpez.com/" data-idrub="38" data-niv="2">2D - 3D - Jeux</a></li>
+				<li><a href="https://asm.developpez.com/" data-idrub="16" data-niv="2">Assembleur</a></li>
+				<li><a href="https://c.developpez.com/" data-idrub="3" data-niv="2">C</a></li>
+				<li><a href="https://cpp.developpez.com/" data-idrub="59" data-niv="2">C++</a></li>
+				<li><a href="https://d.developpez.com/" data-idrub="123" data-niv="2">D</a></li>
+				<li><a href="https://go.developpez.com/" data-idrub="124" data-niv="2">Go</a></li>
+				<li><a href="https://kotlin.developpez.com/" data-idrub="145" data-niv="2">Kotlin</a></li>
+				<li><a href="https://objective-c.developpez.com/" data-idrub="117" data-niv="2">Objective C</a></li>
+				<li><a href="https://pascal.developpez.com/" data-idrub="7" data-niv="2">Pascal</a></li>
+				<li><a href="https://perl.developpez.com/" data-idrub="29" data-niv="2">Perl</a></li>
+				<li><a href="https://python.developpez.com/" data-idrub="27" data-niv="2">Python</a></li>
+				<li><a href="https://rust.developpez.com/" data-idrub="137" data-niv="2">Rust</a></li>
+				<li><a href="https://swift.developpez.com/" data-idrub="128" data-niv="2">Swift</a></li>
+				<li><a href="https://qt.developpez.com/" data-idrub="65" data-niv="2">Qt</a></li>
+				<li><a href="https://xml.developpez.com/" data-idrub="11" data-niv="2">XML</a></li>
+				<li><a href="https://general.developpez.com/cours/" data-idrub="21" data-niv="2">Autres</a></li>
+			</ul></li>
+	<li><a href="https://sgbd.developpez.com/" data-idrub="13" data-niv="1" class="gabarit_selection">SGBD<!--<span class="gabarit_tooltip">Systèmes de Gestion de Bases de Données</span>--></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://sgbd.developpez.com/" data-idrub="13" data-niv="2">SGBD &amp; SQL</a></li>
+				<li><a href="https://4d.developpez.com/" data-idrub="39" data-niv="2">4D</a></li>
+				<li><a href="https://access.developpez.com/" data-idrub="19" data-niv="2">Access</a></li>
+				<li><a href="https://big-data.developpez.com/" data-idrub="126" data-niv="2">Big Data</a></li>
+				<li><a href="https://data-science.developpez.com/" data-idrub="151" data-niv="2">Data Science</a></li>
+				<li><a href="https://db2.developpez.com/" data-idrub="36" data-niv="2">DB2</a></li>
+				<li><a href="https://firebird.developpez.com/" data-idrub="73" data-niv="2">Firebird</a></li>
+				<li><a href="https://interbase.developpez.com/" data-idrub="32" data-niv="2">InterBase</a></li>
+				<li><a href="https://mysql.developpez.com/" data-idrub="31" data-niv="2">MySQL</a></li>
+				<li><a href="https://nosql.developpez.com/" data-idrub="114" data-niv="2">NoSQL</a></li>
+				<li><a href="https://postgresql.developpez.com/" data-idrub="33" data-niv="2">PostgreSQL</a></li>
+				<li><a href="https://oracle.developpez.com/" data-idrub="25" data-niv="2">Oracle</a></li>
+				<li><a href="https://sybase.developpez.com/" data-idrub="37" data-niv="2">Sybase</a></li>
+				<li><a href="https://sqlserver.developpez.com/" data-idrub="34" data-niv="2">SQL-Server</a></li>
+				<li><a href="https://mongodb.developpez.com/" data-idrub="148" data-niv="2">MongoDB</a></li>
+			</ul></li>
+	<li><a href="https://office.developpez.com/" data-idrub="54" data-niv="1">Office<!--<span class="gabarit_tooltip">Bureautique pour l'entreprise</span>--></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://office.developpez.com/" data-idrub="54" data-niv="2">Microsoft Office</a></li>
+				<li><a href="https://access.developpez.com/" data-idrub="19" data-niv="2">Access</a></li>
+				<li><a href="https://excel.developpez.com/" data-idrub="75" data-niv="2">Excel</a></li>
+				<li><a href="https://word.developpez.com/" data-idrub="76" data-niv="2">Word</a></li>
+				<li><a href="https://outlook.developpez.com/" data-idrub="77" data-niv="2">Outlook</a></li>
+				<li><a href="https://powerpoint.developpez.com/" data-idrub="78" data-niv="2">PowerPoint</a></li>
+				<li><a href="https://sharepoint.developpez.com/" data-idrub="79" data-niv="2">SharePoint</a></li>
+				<li><a href="https://project.developpez.com/" data-idrub="99" data-niv="2">Microsoft Project</a></li>
+				<li><a href="https://openoffice-libreoffice.developpez.com/" data-idrub="116" data-niv="2">OpenOffice &amp; LibreOffice</a></li>
+			</ul></li>
+	<li><a href="https://mobiles.developpez.com/" data-idrub="94" data-niv="1">Mobiles<!--<span class="gabarit_tooltip">Logiciels et matériels mobiles</span>--></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://mobiles.developpez.com/" data-idrub="94" data-niv="2">Mobiles</a></li>
+				<li><a href="https://android.developpez.com/" data-idrub="95" data-niv="2">Android</a></li>
+				<li><a href="https://ios.developpez.com/" data-idrub="101" data-niv="2">iOS</a></li>
+			</ul></li>
+	<li><a href="https://systeme.developpez.com/" data-idrub="30" data-niv="1">Systèmes<!--<span class="gabarit_tooltip">Logiciels et matériels systèmes</span>--></a>
+			<ul class="gabarit_sousmenu">
+				<li><a href="https://systeme.developpez.com/" data-idrub="30" data-niv="2">Systèmes</a></li>
+				<li><a href="https://windows.developpez.com/" data-idrub="17" data-niv="2">Windows</a></li>
+				<li><a href="https://linux.developpez.com/" data-idrub="18" data-niv="2">Linux</a></li>
+				<li><a href="https://arduino.developpez.com/" data-idrub="142" data-niv="2">Arduino</a></li>
+				<li><a href="https://securite.developpez.com/" data-idrub="40" data-niv="2">Sécurité</a></li>
+				<li><a href="https://hardware.developpez.com/" data-idrub="64" data-niv="2">Hardware</a></li>
+				<li><a href="https://hpc.developpez.com/" data-idrub="139" data-niv="2">HPC</a></li>
+				<li><a href="https://mac.developpez.com/" data-idrub="57" data-niv="2">Mac</a></li>
+				<li><a href="https://raspberry-pi.developpez.com/" data-idrub="131" data-niv="2">Raspberry Pi</a></li>
+				<li><a href="https://reseau.developpez.com/" data-idrub="70" data-niv="2">Réseau</a></li>
+				<li><a href="https://green-it.developpez.com/" data-idrub="104" data-niv="2">Green IT</a></li>
+				<li><a href="https://embarque.developpez.com/" data-idrub="110" data-niv="2">Systèmes embarqués</a></li>
+				<li><a href="https://virtualisation.developpez.com/" data-idrub="108" data-niv="2">Virtualisation</a></li>
+			</ul></li>
+</ul>
+
+<ul id="gabarit_barre1"><li><a href="https://sgbd.developpez.com/">SGBD</a></li><li><a href="https://4d.developpez.com/">4D</a></li><li><a href="https://access.developpez.com/">Access</a></li><li><a href="https://big-data.developpez.com/">Big Data</a></li><li><a href="https://data-science.developpez.com/">Data Science</a></li><li><a href="https://db2.developpez.com/">DB2</a></li><li><a href="https://firebird.developpez.com/">Firebird</a></li><li><a href="https://interbase.developpez.com/">InterBase</a></li><li><a href="https://mysql.developpez.com/">MySQL</a></li><li><a href="https://nosql.developpez.com/">NoSQL</a></li><li><a href="https://postgresql.developpez.com/">PostgreSQL</a></li><li class="gabarit_selection"><a href="https://oracle.developpez.com/">Oracle</a></li><li><a href="https://sybase.developpez.com/">Sybase</a></li><li><a href="https://sqlserver.developpez.com/">SQL-Server</a></li><li><a href="https://mongodb.developpez.com/">MongoDB</a></li></ul>
+
+<div id="gabarit_barre2">
+	<a class="gabarit_social gabarit_facebook" href="http://www.facebook.com/pages/Oracle/105963932775217" target="_blank" title="Retrouver Developpez sur Facebook"></a>
+	<a class="gabarit_social gabarit_twitter" href="http://twitter.com/Oracle_DVP" target="_blank" title="Retrouver Developpez sur Twitter"></a>
+	<a class="gabarit_social gabarit_rss" href="http://oracle.developpez.com/index/rss" target="_blank" title="Flux RSS"></a>
+	<ul>
+<li><a href="https://oracle.developpez.com/">ACCUEIL ORACLE</a></li><li><a href="https://www.developpez.net/forums/f42/bases-donnees/oracle/">FORUM ORACLE</a></li><li><a href="https://oracle.developpez.com/faq/">F.A.Q ORACLE</a></li><li><a href="https://oracle.developpez.com/cours/">TUTORIELS ORACLE</a></li><li><a href="http://sql.developpez.com/">TUTORIELS SQL</a></li><li><a href="https://oracle.developpez.com/telecharger/index/categorie/198/Sources-Oracle">SCRIPTS SQL</a></li><li><a href="https://oracle.developpez.com/livres/">LIVRES ORACLE</a></li><li><a href="https://oracle.developpez.com/quiz/">QUIZ</a></li>	</ul>
+</div>
+
+</nav>
+
+
+	</header>
+	<section>
+
+	<div id="gabarit_pubBB">
+		<div id="gabarit_pub0"></div><div id="tn25br0a" class="dvpb0" style="display: inline-block; width: 728px; height: 90px"><style type="text/css">html, body { margin: 0; padding: 0; }</style><div id="75922-1"><script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/gen.js.download"></script><script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/requestform.js.download"></script></div><style type="text/css"> #gabarit_pub0 { display: inline-block; }</style></div>
+	</div>
+
+	<div class="contenuPage" style="min-height: auto;">
+		<article class="ArticleComplet" itemscope="" itemtype="https://schema.org/Article" style="margin: 0px;">
+<meta itemprop="genre" content="informatique">
+<meta itemprop="inLanguage" content="fr-FR">
+		<h1 class="titre-article" itemprop="name">Présentation de l'outil RMAN d'Oracle</h1><section style="grid-template-columns: 300px auto;">
+
+<nav class="nav-sommaire fixed2" role="navigation">
+<h2 class="TitreHeader ToggleGecko">Table des matières<img class="ToggleImgPlier" title="Plier" alt="Plier" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/fleche-haut-bleue.png"><img class="ToggleImgDeplier" title="Déplier" alt="Déplier" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/fleche-bas-bleue.png" style="display:none;"></h2>
+<ul id="nav_sommaire_ul_principal" class="nav-sommaire-ul" style="overflow-y: scroll;">
+    <li><a class="summaryIndent0" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LI">I. Présentation</a><ul class="nav-sommaire-ul IndentationI">
+      
+      <li><a class="summaryIndent1" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LI-A">I-A. Introduction</a></li>
+      <li><a class="summaryIndent1" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LI-B">I-B. Les fonctions de RMAN</a></li>
+      <li><a class="summaryIndent1" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LI-C">I-C. Les différents types de sauvegardes possibles avec RMAN</a></li>
+      <li><a class="summaryIndent1" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LI-D">I-D. Terminologie</a></li>
+    </ul></li>
+    <li><a class="summaryIndent0" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LII">II. Architecture RMAN</a><ul class="nav-sommaire-ul IndentationII">
+      
+      <li><a class="summaryIndent1" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LII-A">II-A. Les composants RMAN</a></li>
+      <li><a class="summaryIndent1" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LII-B">II-B. Fonctionnement avec catalogue de récupération ou fichiers de contrôle</a><ul class="nav-sommaire-ul IndentationII-B">
+        
+        
+        <li><a class="summaryIndent2" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LII-B-1">II-B-1. Solution basée sur le catalogue de récupération (Recovery Catalog)</a></li>
+        <li><a class="summaryIndent2" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LII-B-2">II-B-2. Solution basée sur les fichiers de contrôle (controlfiles)</a></li>
+      </ul></li>
+      <li><a class="summaryIndent1" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LII-C">II-C. Mode d'accès RMAN</a><ul class="nav-sommaire-ul IndentationII-C">
+        
+        
+        
+        <li><a class="summaryIndent2" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LII-C-1">II-C-1. Connexion à RMAN avec un catalogue de récupération</a></li>
+        <li><a class="summaryIndent2" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LII-C-2">II-C-2. Connexion à RMAN sans catalogue de récupération</a></li>
+        <li><a class="summaryIndent2" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LII-C-3">II-C-3. Options de lancement de la commande RMAN</a></li>
+      </ul></li>
+      <li><a class="summaryIndent1" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LII-D">II-D. RMAN et les unités de sauvegarde</a></li>
+    </ul></li>
+    <li><a class="summaryIndent0" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LIII">III. Mise en œuvre de RMAN</a><ul class="nav-sommaire-ul IndentationIII">
+      
+      <li><a class="summaryIndent1" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LIII-A">III-A. Préparation de l'environnement OS</a></li>
+      <li><a class="summaryIndent1" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LIII-B">III-B. Création du catalogue RMAN</a><ul class="nav-sommaire-ul IndentationIII-B">
+        
+        <li><a class="summaryIndent2" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LIII-B-1">III-B-1. Création d'un utilisateur propriétaire du catalogue</a></li>
+        <li><a class="summaryIndent2" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LIII-B-2">III-B-2. Création du catalogue</a></li>
+      </ul></li>
+      <li><a class="summaryIndent1" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LIII-C">III-C. Première sauvegarde de base de données avec RMAN</a><ul class="nav-sommaire-ul IndentationIII-C">
+        
+        
+        <li><a class="summaryIndent2" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LIII-C-1">III-C-1. Déclaration de la base de données cible dans le catalogue RMAN</a></li>
+        <li><a class="summaryIndent2" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LIII-C-2">III-C-2. Sauvegarde de la base de données</a></li>
+      </ul></li>
+      <li><a class="summaryIndent1" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LIII-D">III-D. Première restauration de base de données avec RMAN</a></li>
+    </ul></li>
+    <li><a class="summaryIndent0" href="https://oracle.developpez.com/guide/sauvegarde/rman/#LIV">IV. Bibliographie</a></li>
+    <li><a class="summaryIndent0" href="https://oracle.developpez.com/guide/sauvegarde/rman/#Lno-V">Remerciements</a></li>
+  </ul></nav>
+
+<div class="contenu">
+
+<section itemprop="about" class="SectionSynopsis">
+    <p>Ce document constitue une première présentation de l'outil RMAN d'Oracle permettant de sauvegarder et restaurer des bases de données. L'article abordera également les composants de RMAN et la mise en œuvre de cet outil. ♪</p>
+  <p class="TextNbrVues" style="display: block;">Article lu <span id="NbrVues">91827</span> fois.</p></section><div class="InfoAuthArtBook">
+	<section class="SectionAuteurs">
+	<h2 class="TitreHeader">L'auteur</h2>
+<p class="auteur" itemprop="name" itemscope="" itemtype="http://schema.org/Person"><a itemprop="url" class="auteur" href="https://www.developpez.net/forums/u63401/gregory-broissard/"><span itemprop="author">Grégory BROISSARD</span></a><a class="homepage" href="https://www.developpez.com/user/profil/63401/gregory-broissard/"><img src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/pro.png" title="Profil Pro" alt="Profil Pro" style="vertical-align:middle;"></a></p>
+</section>
+<section class="SectionInformationArticle">
+<h2 class="TitreHeader">L'article</h2>
+
+<p class="InfoArticle">Publié&nbsp;le&nbsp;<span itemprop="datePublished">13&nbsp;juin&nbsp;2005&nbsp;</span></p><p>
+<span class="lientelechargementpdf"><a class="lientelechargement" href="https://oracle.developpez.com/guide/sauvegarde/rman/rman.pdf" title="Télécharger la version PDF de cet article.">Version PDF</a></span>
+<span class="lientelechargementzip"><a class="lientelechargement" href="https://oracle.developpez.com/guide/sauvegarde/rman/rman.zip" title="Télécharger la version HTML de cet article.">Version hors-ligne</a></span></p>
+<p><span class="lientelechargementebook"><a class="lientelechargement" href="https://oracle.developpez.com/guide/sauvegarde/rman/rman.epub" title="Télécharger la version ePub de l&#39;article compatible avec la plupart des liseuses non Kindle (Amazon).">ePub</a></span>, <span class="lientelechargementebook"><a class="lientelechargement" href="https://oracle.developpez.com/guide/sauvegarde/rman/rman.azw" title="Télécharger la version Azw spécifique aux liseuses Kindle (Amazon).">Azw</a></span> et <span class="lientelechargementebook"><a class="lientelechargement" href="https://oracle.developpez.com/guide/sauvegarde/rman/rman.mobi" title="Télécharger la version Mobi de l&#39;article compatible avec les liseuses Amazon.">Mobi</a></span></p>
+</section>
+<section class="SectionBookmarks">
+<h2 class="TitreHeader">Liens&nbsp;sociaux</h2>
+<div class="InfoBookmarks"><a title="Viadeo" href="http://www.viadeo.com/shareit/share/?url=https%3A%2F%2Foracle.developpez.com%2Fguide%2Fsauvegarde%2Frman%2F&amp;Title=Pr%C3%83%C2%A9sentation+de+l%27outil+RMAN+d%27Oracle" rel="nofollow"><img alt="Viadeo" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/kitbm-viadeo.png"></a>&nbsp;<a title="Twitter" href="http://twitter.com/timeline/home?status=https%3A%2F%2Foracle.developpez.com%2Fguide%2Fsauvegarde%2Frman%2F" rel="nofollow"><img alt="Twitter" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/kitbm-twitter.png"></a>&nbsp;<a title="Facebook" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Foracle.developpez.com%2Fguide%2Fsauvegarde%2Frman%2F" rel="nofollow"><img alt="Facebook" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/kitbm-facebook.png"></a>&nbsp;<a title="Google +" href="https://plus.google.com/share?url=https%3A%2F%2Foracle.developpez.com%2Fguide%2Fsauvegarde%2Frman%2F" onclick="javascript:window.open(this.href, &#39;&#39;, &#39;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&#39;);return false;"><img src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/gplus-16.png" alt="Share on Google+"></a>&nbsp;<script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/in.js.download">lang: fr_FR</script>
+			<span class="IN-widget" data-lnkd-debug="&lt;script type=&quot;IN/Share+init&quot; data-url=&quot;$url&quot;&gt;&lt;/script&gt;" style="display: inline-block; line-height: 1; vertical-align: bottom; padding: 0px; margin: 0px; text-indent: 0px; text-align: center;"><span style="padding: 0px !important; margin: 0px !important; text-indent: 0px !important; display: inline-block !important; vertical-align: bottom !important; font-size: 1px !important;"><button class="IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu"><xdoor-icon aria-hidden="true"><svg viewBox="0 0 24 24" width="24px" height="24px" x="0" y="0" preserveAspectRatio="xMinYMin meet">
+      <g style="fill: currentColor">
+        <rect x="-0.003" style="fill:none;" width="24" height="24"></rect>
+        <path style="" d="M20,2h-16c-1.1,0-2,0.9-2,2v16c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2zM8,19h-3v-9h3V19zM6.5,8.8C5.5,8.8,4.7,8,4.7,7s0.8-1.8,1.8-1.8S8.3,6,8.3,7S7.5,8.8,6.5,8.8zM19,19h-3v-4c0-1.4-0.6-2-1.5-2c-1.1,0-1.5,0.8-1.5,2.2V19h-3v-9h2.9v1.1c0.5-0.7,1.4-1.3,2.6-1.3c2.3,0,3.5,1.1,3.5,3.7V19z"></path>
+      </g>
+    </svg></xdoor-icon>Partager</button></span></span>&nbsp;</div>
+</section></div><section itemprop="articleBody" class="articleBody">
+    
+		<h2 class="TitreSection0" id="LI">I. Présentation<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h2><div class="BlocSection0">
+      
+      
+		<h3 class="TitreSection1" id="LI-A">I-A. Introduction<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h3><div class="BlocSection1">
+        
+        <p>RMAN (Recovery MANager) est un utilitaire standard de la base de données Oracle. Il permet aux DBA de gérer les opérations de sauvegarde/restauration de manière souple et optimisée.<br>
+		RMAN est le successeur de EBU (Enterprise Backup Utility). Il est codé en Pro*C. </p>
+      </div>
+      
+		<h3 class="TitreSection1" id="LI-B">I-B. Les fonctions de RMAN<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h3><div class="BlocSection1">
+        
+        <p>Livré en standard depuis la version 8 d'Oracle, il ne nécessite pas d'installation particulière (cf chapitre <a class="lienArticle simple" href="https://oracle.developpez.com/guide/sauvegarde/rman/fichiers/#L3">Mise en œuvre de RMAN</a>). Il offre la possibilité&nbsp;: </p>
+        <ul class="ListeDVP">
+          <li>de réaliser des sauvegardes globales de la base, d'espaces disque logiques (tablespace), de fichiers de données (datafiles), de fichiers de contrôle (controlfiles) et de fichiers d'archive (archivelog)&nbsp;;</li>
+          <li>de réaliser des sauvegardes incrémentielles (différentielles ou cumulatives) au niveau bloc de données Oracle&nbsp;;</li>
+          <li>d'éviter de sauvegarder les blocs Oracle vides, ce qui permet un gain significatif de volume de sauvegarde&nbsp;;</li>
+          <li>de s'interfacer avec un outil de sauvegarde externe (gestionnaire de médias)&nbsp;;</li>
+          <li>de garder la trace des sauvegardes soit dans un catalogue de récupération (recovery catalog), soit dans les fichiers de contrôle (cf chapitre <a class="lienArticle simple" href="https://oracle.developpez.com/guide/sauvegarde/rman/fichiers/#L3">Mise en œuvre</a>)&nbsp;;</li>
+          <li>d'effectuer des restaurations globales ou partielles&nbsp;;</li>
+          <li>de paralléliser les opérations de sauvegarde/restauration afin d'accroître les performances&nbsp;;</li>
+          <li>de gérer les périodes de conservation des sauvegardes&nbsp;;</li>
+          <li>de placer les opérations de sauvegarde/restauration courantes dans le catalogue sous forme de scripts (à la condition d'utiliser le catalogue RMAN)&nbsp;;</li>
+          <li>de dupliquer une base de données de manière simple&nbsp;;</li>
+          <li>de mutualiser les scripts de sauvegardes, ils ne sont pas dépendants du système d'exploitation. RMAN dispose de son propre langage de script&nbsp;;</li>
+          <li>d'éditer des rapports&nbsp;;</li>
+          <li>de sauvegarder ou dupliquer les bases de données. Les copies n'ont qu'un intérêt limité par rapport aux copies OS&nbsp;;</li>
+          <li>de vérifier les sauvegardes effectuées en termes de corruption et ne corrompt pas les bases qu'il sauvegarde (contrairement à la copie de fichiers de données sans positionner les tablespaces en mode backup) ce qui est un avantage non négligeable.</li>
+        </ul>
+      </div>
+      
+		<h3 class="TitreSection1" id="LI-C">I-C. Les différents types de sauvegardes possibles avec RMAN<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h3><div class="BlocSection1">
+        
+        <p>RMAN permet donc les types de sauvegardes suivants&nbsp;: </p>
+        <ul class="ListeDVP">
+          <li>de type <b>COMPLET</b> (ou FULL)&nbsp;: on sauvegarde tous les blocs&nbsp;;</li>
+          <li>de type <b>DIFFÉRENTIEL&nbsp;:</b> on sauvegarde uniquement les blocs modifiés depuis la précédente sauvegarde de niveau n ou inférieur&nbsp;;</li>
+          <li>de type <b>CUMULATIF&nbsp;:</b> on sauvegarde uniquement les blocs modifiés depuis la précédente sauvegarde de niveau n-1.</li>
+        </ul>
+        <div class="imgtext-info">
+          <p>Les sauvegardes différentielles et cumulatives sont dites incrémentielles en opposition aux sauvegardes complètes. </p>
+        </div>
+        <p>RMAN gère trois niveaux de sauvegardes incrémentielles&nbsp;: </p>
+        <ul class="ListeDVP">
+          <li><b>Niveau 0&nbsp;:</b> base de tous les autres niveaux (Sauvegarde de l'ensemble des blocs contenant des données)&nbsp;;</li>
+          <li><b>Niveau 1&nbsp;:</b> sauvegarde tous les blocs qui ont changé depuis la plus récente sauvegarde incrémentielle de niveau 0&nbsp;;</li>
+          <li><b>Niveau 2&nbsp;:</b> sauvegarde tous les blocs qui ont changé depuis la plus récente sauvegarde incrémentielle de niveau 0, 1 ou 2.</li>
+        </ul>
+        <p><b>Exemple de sauvegarde DIFFÉRENTIELLE&nbsp;:</b> </p>
+        <div class="div-figure"><figure class="figure-center"><a data-lightbox="lightbox[article]" href="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/differentielle.gif"><img class="ImgCliquable figure-img-caption" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/differentielle.gif" alt="Image non disponible" width="550" height="307"></a></figure></div>
+        <p><b>Exemple de sauvegarde CUMULATIVE&nbsp;:</b> </p>
+        <div class="div-figure"><figure class="figure-center"><a data-lightbox="lightbox[article]" href="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/cumulative.gif"><img class="ImgCliquable figure-img-caption" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/cumulative.gif" alt="Image non disponible" width="550" height="301"></a></figure></div>
+        <div class="imgtext-warning">
+          <p>Attention, dans tous les cas, une sauvegarde de niveau 0 (level 0) est nécessaire avant les sauvegardes de niveau supérieur.</p>
+          <p>Une sauvegarde de niveau 0 est bien différente d'une sauvegarde complète dans le cadre de votre stratégie de sauvegarde. Si physiquement, une sauvegarde de niveau 0 est bien une sauvegarde complète, une sauvegarde complète ne peut être considérée comme une sauvegarde de niveau 0 par RMAN. Par exemple, le dimanche vous faites une sauvegarde complète et une sauvegarde de niveau 0, le lundi vous faites une sauvegarde de niveau 2 (rendue possible grâce à la sauvegarde de niveau 0 de la veille). Si la base doit être restaurée le lundi soir, vous ne pourrez pas utiliser la sauvegarde complète comme parente de la sauvegarde de niveau 2 du lundi. Pour RMAN, la sauvegarde complète n'est pas inscrite dans votre stratégie, c'est donc bien les sauvegardes de niveau 0 et 2 qu'il faudra restaurer.</p>
+          <p>La sauvegarde complète pourra servir éventuellement pour une copie dans un autre environnement. </p>
+        </div>
+        <p>Dans la plupart des cas, si vous avez besoin de faire des restaurations rapides, les sauvegardes cumulatives sont préférables aux sauvegardes incrémentielles, car il faudra restaurer uniquement la sauvegarde de niveau 0 + une seule cumulative. Prenons un exemple avec deux stratégies de sauvegarde&nbsp;: une en mode différentiel et une en mode cumulatif. Supposons un plantage de la base le mercredi matin. Pour restaurer votre base avec la première stratégie, il faut restaurer la sauvegarde de niveau 0 + 3 sauvegardes incrémentielles de niveau 2 (lundi, mardi et mercredi).Dans le cas de la seconde stratégie en mode cumulatif, on ne restaure que la sauvegarde de niveau 0 + la sauvegarde de niveau 2 du mercredi, ce qui est forcément plus rapide. En revanche, l'espace nécessaire pour la sauvegarde est plus important. </p>
+      </div>
+      
+		<h3 class="TitreSection1" id="LI-D">I-D. Terminologie<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h3><div class="BlocSection1">
+        
+        <p><b>Base de données cible&nbsp;:</b> on appelle base de données cible la base qui est l'objet d'opérations de sauvegarde/restauration, RMAN utilise les fichiers de contrôle de la base cible afin de récupérer les informations sur les objets à sauvegarder.<br><br><b>BackupPiece&nbsp;:</b> c'est une entité physique contenant un ou plusieurs fichiers de données. Un fichier peut très bien être sur plusieurs backup pieces. Leur nombre et leur taille dépendent du paramètre <b>maxpiecesize</b>.<br><br><b>BackupSet&nbsp;:</b> c'est une entité logique contenant un ou plusieurs backup pieces. Il est impossible d'avoir un fichier sur plusieurs backup sets (librairies). Il est impossible de mixer dans une même librairie des fichiers de contrôle et des fichiers d'archive.<br><br><b>Principe de stockage des sauvegardes&nbsp;: </b></p>
+        <div class="div-figure"><figure class="figure-center"><img class="figure-img-caption" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/principesauvegarde.gif" alt="Image non disponible" width="457" height="200"></figure></div>
+      </div>
+    </div>
+    
+		<h2 class="TitreSection0" id="LII">II. Architecture RMAN<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h2><div class="BlocSection0">
+      
+      
+		<h3 class="TitreSection1" id="LII-A">II-A. Les composants RMAN<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h3><div class="BlocSection1">
+        
+        <p>RMAN se lance par la commande du même nom se trouvant sous bin dans l'arborescence du moteur Oracle. C'est cet utilitaire qui interprète les commandes des scripts et appelle les processus serveurs pour exécuter les tâches demandées. <br>
+		RMAN fonctionne avec des processus serveur&nbsp;: </p>
+        <ul class="ListeDVP">
+          <li>un premier appelant les paquetages (packages) pour sauvegardes/restaurations. Les deux paquetages sont <b>SYS.DBMS_RCVMAN</b> et <b>SYS.DBMS_BACKUP_RESTORE</b>. Ces deux paquetages sont créés lors de l'exécution du script catproc.sql&nbsp;;</li>
+          <li>un autre pour la mise à jour des logs internes. On peut visualiser les opérations de sauvegarde en cours à l'aide de la vue <b>v$session_longops</b> (la colonne <b>OPNAME</b> contient le nom de l'opération effectuée).</li>
+        </ul>
+        <p>Ces processus serveur se connectent à la base de données cible par le protocole Net8 d'Oracle. RMAN est donc une application cliente de la base de données cible. Après la connexion, un ou des canaux de communication sont ouverts permettant d'effectuer les opérations de sauvegarde / restauration. Avant la version 9i d'Oracle, il faut allouer explicitement un canal avant d'exécuter les commandes RMAN. Le nombre de canaux (channels) correspond au degré de parallélisme de l'opération à effectuer. Le channel est le canal d'écriture vers le media de sauvegarde (disque ou bande) <br>
+		Il peut être&nbsp;: </p>
+        <ul class="ListeDVP">
+          <li>automatique (défini par commande configure). On crée un jeu de canaux RMAN qui sera utilisé par défaut si dans le script RMAN aucun canal spécifique n'est alloué. Dans le script RMAN, il n'y aura alors pas de commande «&nbsp;allocate channel&nbsp;». Il utilisera les canaux par défaut. Par exemple, pour vos sauvegardes sur disque, vous pouvez créer un jeu de canaux par défaut&nbsp;;</li>
+          <li>spécifique&nbsp;: alloué spécialement pour la sauvegarde (par la commande allocate). Par exemple, vous faites vos sauvegardes sur bande et vous disposez d'un jeu de canaux par défaut pour le robot de sauvegarde et cette fois vous avez besoin d'une sauvegarde sur disque, alors vous devez explicitement déclarer un canal via la commande «&nbsp;allocate channel&nbsp;» spécifique aux disques. </li>
+        </ul>
+        <p>Pour chaque canal un <b>channel process</b> est défini&nbsp;: </p>
+        <ul class="ListeDVP">
+          <li>pour une sauvegarde&nbsp;: ce processus coordonne la lecture des fichiers de données et l'écriture à l'emplacement spécifié&nbsp;;</li>
+          <li>pour une restauration&nbsp;: ce processus coordonne la lecture depuis l'emplacement spécifié lors de la sauvegarde et l'écriture des fichiers de données&nbsp;;</li>
+          <li>deux types de channel&nbsp;: Disk ou Tape.</li>
+        </ul>
+        <p>Les données utilisées par RMAN pour les opérations sont appelées métadonnées RMAN. Elles sont stockées soit dans un fichier de contrôle (controlfile) de la base de données cible soit dans le catalogue RMAN le cas échéant (cf chapitre <a class="lienArticle simple" href="https://oracle.developpez.com/guide/sauvegarde/rman/fichiers/#L2.2">Fonctionnement avec catalogue de récupération ou fichiers de contrôle</a>). <br><b>Principe de communication RMAN&nbsp;: </b><br><br></p>
+        <div class="div-figure"><figure class="figure-center"><a data-lightbox="lightbox[article]" href="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/communication.gif"><img class="ImgCliquable figure-img-caption" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/communication.gif" alt="Image non disponible" width="525" height="325"></a></figure></div>
+      </div>
+      
+		<h3 class="TitreSection1" id="LII-B">II-B. Fonctionnement avec catalogue de récupération ou fichiers de contrôle<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h3><div class="BlocSection1">
+        
+        <p>Le stockage des informations relatives aux sauvegardes effectuées via RMAN peut se faire soit dans un catalogue de récupération (recovery catalog), soit exclusivement dans les fichiers de contrôle des bases de données cibles.<br>
+		C'est d'ailleurs une des premières choses à décider lors de l'implémentation d'une solution RMAN dans une entreprise. En RMAN 9i, l'option de connexion à RMAN par défaut est nocatalog. Le catalogue de récupération est un composant optionnel de RMAN. </p>
+        
+		<h4 class="TitreSection2" id="LII-B-1">II-B-1. Solution basée sur le catalogue de récupération (Recovery Catalog)<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h4><div class="BlocSection2">
+          
+          <p>Le catalogue est un référentiel (ensemble de tables) pour RMAN contenant des informations sur&nbsp;: </p>
+          <ul class="ListeDVP">
+            <li>les ensembles de sauvegardes des fichiers de données et archives&nbsp;;</li>
+            <li>les copies de fichiers de données&nbsp;;</li>
+            <li>la structure physique de la base de données cible&nbsp;;</li>
+            <li>les archives logs&nbsp;;</li>
+            <li>les scripts de travail (si utilisés).</li>
+          </ul>
+          <p>Ce catalogue est en fait une base de données qu'il faut créer sur un serveur distinct de la base cible de préférence. <br></p>
+          <div class="imgtext-info">
+            <p>Bien que ce soit un composant optionnel, il est vivement conseillé de l'utiliser si l'on veut bénéficier de l'ensemble des fonctionnalités RMAN.</p>
+          </div>
+          <p>L'inconvénient est que ce catalogue est une base de données qu'il faut surveiller et gérer. Dans votre stratégie de sauvegarde doit figurer cette base. Cependant un simple import du schéma suffit pour restaurer ce catalogue. </p>
+        </div>
+        
+		<h4 class="TitreSection2" id="LII-B-2">II-B-2. Solution basée sur les fichiers de contrôle (controlfiles)<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h4><div class="BlocSection2">
+          
+          <p>Il est parfaitement possible de ne pas utiliser le catalogue. Dans ce cas, RMAN va sauvegarder les métadonnées dans les fichiers de contrôle de la base de données cible. <br>
+		L'avantage est de ne pas avoir à gérer le catalogue. Cependant un certain nombre de fonctionnalités de RMAN sont alors indisponibles (par exemple, le stockage des scripts de sauvegarde/restauration ou les fonctions de reporting). De plus, la perte des fichiers de contrôle dans ce cas peut devenir problématique.<br>
+		La solution qui consiste à n'utiliser que le fichier de contrôle comme dépositaire de la liste des sauvegardes effectuées paraît la plus simple à mettre en place. Au niveau sécurité, RMAN9i est beaucoup plus performant que RMAN8i&nbsp;: en effet la nouvelle fonctionnalité <b>CONTROLFILE AUTOBACKUP ON</b> permet de faire une sauvegarde du fichier de contrôle et du spfile à chaque sauvegarde ou modification de structure de la base; de plus en cas de perte des fichiers de contrôle, à travers RMAN on sait de façon simple les récupérer.<br>
+		Enfin, la sauvegarde de ces informations dans les fichiers de contrôle fait qu'ils grossissent. Il faut donc faire attention à définir correctement les périodes de conservation des sauvegardes (<b>CONTROL_FILE_RECORD_KEEP_TIME</b>). On a donc un historique plus important dans le cadre du catalogue de récupération. </p>
+        </div>
+      </div>
+      
+		<h3 class="TitreSection1" id="LII-C">II-C. Mode d'accès RMAN<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h3><div class="BlocSection1">
+        
+        <p>RMAN permet de se connecter soit en ligne de commande soit avec une interface graphique grâce à OEM (version 2 et ultérieures).<br>
+		RMAN ouvre des sessions sur la base de données, deux à son lancement et après autant que de canaux alloués pour les opérations de sauvegarde/restauration. </p>
+        <div class="imgtext-info">
+          <p>D'autre part RMAN fait toujours appel au fichier de contrôle (inaccessible base arrêtée ou non montée), c'est pourquoi il ne peut être utilisé que sur des bases montées ou ouvertes.</p>
+        </div>
+        
+		<h4 class="TitreSection2" id="LII-C-1">II-C-1. Connexion à RMAN avec un catalogue de récupération<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h4><div class="BlocSection2">
+          
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e482">Commande de connexion en 8.0.x<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e482" onclick="selectionCode(&#39;contenuCoded0e482&#39;, &#39;IdTitreCode-d0e482&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e482" class="contenuCode">$ rman target u1<code class="pl-sql_operator">/</code>p1<code class="pl-sql_literal1">[@aliastarget]</code> rcvcat u2<code class="pl-sql_operator">/</code>p2<code class="pl-sql_literal1">[@aliascatalog]</code></code></pre></div>
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e496">Commande de connexion en 8.1.x et suivantes<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e496" onclick="selectionCode(&#39;contenuCoded0e496&#39;, &#39;IdTitreCode-d0e496&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e496" class="contenuCode">$ rman target u1<code class="pl-sql_operator">/</code>p1<code class="pl-sql_literal1">[@aliastarget]</code> catalog u2<code class="pl-sql_operator">/</code>p2<code class="pl-sql_literal1">[@aliascatalog]</code></code></pre></div>
+        </div>
+        
+		<h4 class="TitreSection2" id="LII-C-2">II-C-2. Connexion à RMAN sans catalogue de récupération<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h4><div class="BlocSection2">
+          
+          <p>Commande de lancement standard&nbsp;:<br></p>
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e520">Commande de connexion RMAN sans catalogue<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e520" onclick="selectionCode(&#39;contenuCoded0e520&#39;, &#39;IdTitreCode-d0e520&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e520" class="contenuCode">        $ rman target u1<code class="pl-sql_operator">/</code>p1<code class="pl-sql_literal1">[@aliastarget]</code> nocatalog</code></pre></div>
+          <p>L'option permettant de spécifier à RMAN que l'on a choisi d'utiliser le mode de fonctionnement sans catalogue est <b>nocatalog</b>. </p>
+        </div>
+        
+		<h4 class="TitreSection2" id="LII-C-3">II-C-3. Options de lancement de la commande RMAN<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h4><div class="BlocSection2">
+          
+          <p>Le paramètre <b>target</b> permet de spécifier la base de données cible.<br>
+		L'option <b>nocatalog</b> permet de spécifier que l'on n'utilise pas de catalogue RMAN. L'option catalog u2/p2[@aliascatalog] permet de se connecter au catalogue RMAN. Attention en version 8.0, il faut utiliser le mot clé <b>rcvcat</b> et non catalog pour se connecter au catalogue RMAN.<br>
+		L'option <b>log</b> permet de spécifier un fichier de log où sera tracé l'ensemble des manipulations faites au cours de la session RMAN ainsi que les sorties générées par ces commandes.<br><br>
+		Enfin, on peut envisager de lancer un script RMAN stocké sur un système de fichiers à l'aide de l'option <b>cmdfile</b>. </p>
+        </div>
+      </div>
+      
+		<h3 class="TitreSection1" id="LII-D">II-D. RMAN et les unités de sauvegarde<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h3><div class="BlocSection1">
+        
+        <p>RMAN peut envoyer des sauvegardes sur bande à l'aide d'un media manager (MM) tel que arcserve, backupexec ou time navigator par exemple. Le MM est un outil de sauvegarde externe. Il peut s'interfacer avec RMAN, il permet alors de récupérer les données passées par le <b>channel process</b> de RMAN et de les rediriger vers la bande appropriée. Pour utiliser le MM, le serveur de la base de données doit avoir la partie MM cliente installée. C'est cette partie du logiciel qui fait la connexion avec le MM server. Pour RMAN, en plus du MM client, il faut installer le module ORACLE pour le MM&nbsp;: c'est un composant d'ORACLE RDBMS qui sert à connecter RMAN au MM client. Ce composant est appelé de façon générique la Media Manager Library (MML).<br>
+		La MML est une simple bibliothèque qui interprète les requêtes issues de RMAN et qui les traduit en requêtes compréhensibles pour le MM client. Cette MML est fournie par le fournisseur du MM. La MML est chargée en mémoire dans Oracle dès qu'un canal de type tape est alloué (<b>allocate channel C1 device type 'sbt_tape'</b>). Donc à l'allocation d'un canal, Oracle 8i va chercher une librairie appelée <b>$ORACLE_HOME/lib/libobk.so&nbsp;:</b> ceci est juste un lien symbolique vers la bibliothèque que l'on doit utiliser. Le nom complet de cette bibliothèque dépend du MM et de l'OS. En Oracle 9i, il n'existe plus de librairie ou de lien libobk.so, il faut créer le lien avec la librairie fournie par le produit tiers; vous pouvez aussi utiliser le paramètre <b>SBT_LIBRARY</b>.<br></p>
+        <p>Pour résumer, le Media Manager comprend&nbsp;:</p>
+        <ul class="ListeDVP">
+          <li>la MML&nbsp;;</li>
+          <li>le MM Client&nbsp;;</li>
+          <li>le MM Server.</li>
+        </ul>
+        <p>RMAN envoie simplement une demande vers sa MML et c'est le MM logiciel dans son ensemble (partie cliente et partie serveur) qui s'occupe du reste. Il faut cependant avoir à l'esprit qu'en cas de problème au niveau de ces différentes parties du MM, votre sauvegarde (ou restauration) sera bloquée et RMAN sera en attente indéfiniment. </p>
+      </div>
+    </div>
+    
+		<h2 class="TitreSection0" id="LIII">III. Mise en œuvre de RMAN<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h2><div class="BlocSection0">
+      
+      
+		<h3 class="TitreSection1" id="LIII-A">III-A. Préparation de l'environnement OS<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h3><div class="BlocSection1">
+        
+        <p>Avant de pouvoir envisager d'utiliser RMAN, il faut configurer proprement son environnement, c'est pourquoi l'ensemble des variables mentionnées ci-dessous doivent être positionnées&nbsp;: </p>
+        <ul class="ListeDVP">
+          <li><b>ORACLE_SID&nbsp;:</b> nom de l'instance&nbsp;;</li>
+          <li><b>ORACLE_HOME&nbsp;:</b> répertoire d'installation du produit Oracle&nbsp;;</li>
+          <li><b>PATH&nbsp;:</b> doit contenir le répertoire des binaires Oracle soit <b>$ORACLE_HOME/bin&nbsp;</b>;</li>
+          <li><b>LD_LIBRARY_PATH </b>(sur Solaris et Digital Unix) (<b>SHLIB_PATH</b> sur HP-UX - <b>LIBPATH</b> sur AIX), il doit contenir le répertoire des librairies Oracle soit <b>$ORACLE_HOME/lib&nbsp;</b>;</li>
+          <li><b>NLS_LANG</b> si le jeu de caractères (characterset) de la base n'est pas celui par défaut de l'OS.</li>
+        </ul>
+      </div>
+      
+		<h3 class="TitreSection1" id="LIII-B">III-B. Création du catalogue RMAN<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h3><div class="BlocSection1">
+        
+        
+		<h4 class="TitreSection2" id="LIII-B-1">III-B-1. Création d'un utilisateur propriétaire du catalogue<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h4><div class="BlocSection2">
+          
+          <p>Nous pouvons utiliser le compte SYS pour faire des backups sans aucune autre configuration. Cependant, pour des sauvegardes d'applications de production, il est préférable de créer un compte de sauvegarde.<br><br></p>
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e680">Création du schéma propriétaire du catalogue<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e680" onclick="selectionCode(&#39;contenuCoded0e680&#39;, &#39;IdTitreCode-d0e680&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e680" class="contenuCode"><code class="pl-sql_keyword1">SQL</code><code class="pl-sql_operator">&gt;</code><code class="pl-sql_keyword1">create</code> <code class="pl-sql_keyword1">tablespace</code> rman_ts_data <code class="pl-sql_keyword1">datafile</code> <code class="pl-sql_literal1">'/files1/RMAN/rman_ts_data01.dbf'</code> size 50M ;
+ 
+<code class="pl-sql_keyword1">Tablespace</code> Created
+ 
+<code class="pl-sql_keyword1">SQL</code><code class="pl-sql_operator">&gt;</code><code class="pl-sql_keyword1">create</code> <code class="pl-sql_keyword1">user</code> rman <code class="pl-sql_keyword1">identified</code> <code class="pl-sql_keyword1">by</code> rmanpwd  <code class="pl-sql_keyword1">default</code> <code class="pl-sql_keyword1">tablespace</code> RMAN_TS_DATA;
+ 
+<code class="pl-sql_keyword1">User</code> created.
+ 
+<code class="pl-sql_keyword1">SQL</code><code class="pl-sql_operator">&gt;</code><code class="pl-sql_keyword1">grant</code> <code class="pl-sql_keyword1">connect</code>, <code class="pl-sql_keyword1">resource</code>, recovery_catalog_owner <code class="pl-sql_keyword1">to</code> rman;
+ 
+<code class="pl-sql_keyword1">Grant</code> succeeded.</code></pre></div>
+          <p>Le rôle nécessaire à l'utilisation du catalogue est <b>RECOVERY_CATALOG_OWNER</b>. Il est indispensable que l'utilisateur créé ait ce rôle. </p>
+        </div>
+        
+		<h4 class="TitreSection2" id="LIII-B-2">III-B-2. Création du catalogue<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h4><div class="BlocSection2">
+          
+          <p>Il faut se connecter à la base Oracle (dans laquelle le schéma a été créé précédemment) à l'aide de la commande rman&nbsp;:<br><br></p>
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e762">Création du catalogue RMAN<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e762" onclick="selectionCode(&#39;contenuCoded0e762&#39;, &#39;IdTitreCode-d0e762&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e762" class="contenuCode">$ rman catalog rman<code class="pl-sql_operator">/</code>rmanpwd<code class="pl-sql_literal1">[@aliascatalog]</code>
+RMAN<code class="pl-sql_operator">&gt;</code> <code class="pl-sql_keyword1">create</code> catalog <code class="pl-sql_keyword1">tablespace</code> rman_ts_data ;</code></pre></div>
+          <p>Le catalogue est à présent créé, RMAN peut fonctionner. </p>
+        </div>
+      </div>
+      
+		<h3 class="TitreSection1" id="LIII-C">III-C. Première sauvegarde de base de données avec RMAN<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h3><div class="BlocSection1">
+        
+        <p>Dans le cas d'une nouvelle mise en œuvre de sauvegarde de base de données, il faut d'abord enregistrer la base de données sous RMAN. Bien entendu, pour les sauvegardes ultérieures, il est inutile de réenregistrer la base de données; d'ailleurs RMAN refusera de la réenregistrer parce qu'il ne peut y avoir qu'un seul «&nbsp;register&nbsp;» par base de données afin de garantir l'unicité. </p>
+        
+		<h4 class="TitreSection2" id="LIII-C-1">III-C-1. Déclaration de la base de données cible dans le catalogue RMAN<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h4><div class="BlocSection2">
+          
+          <p>La première étape avant de pouvoir sauvegarder une base de données avec RMAN est de la déclarer dans le catalogue. Si la base de données cible n'est pas enregistrée dans le catalogue de restauration, ce dernier ne peut pas être utilisé pour gérer les informations de sauvegardes relatives à cette base. <br><br>
+		Supposons dans notre cas que nous ayons une base de données db1 à sauvegarder.<br><br></p>
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e806">Enregistrement sous RMAN de la base de données cible<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e806" onclick="selectionCode(&#39;contenuCoded0e806&#39;, &#39;IdTitreCode-d0e806&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e806" class="contenuCode">$rman catalog rman<code class="pl-sql_operator">/</code>rmanpwd@aliascatalog target sys<code class="pl-sql_operator">/</code>oracle@db1
+RMAN<code class="pl-sql_operator">&gt;</code>register <code class="pl-sql_keyword1">database</code> ;</code></pre></div>
+          <p>Le plus simple est souvent de se connecter sur la machine cible sans mot de passe et de taper&nbsp;: <br><br></p>
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e826">Enregistrement sous RMAN de la base de données cible<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e826" onclick="selectionCode(&#39;contenuCoded0e826&#39;, &#39;IdTitreCode-d0e826&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e826" class="contenuCode">$<code class="pl-sql_keyword1">export</code> ORACLE_SID<code class="pl-sql_operator">=</code>db1
+$rman catalog rman<code class="pl-sql_operator">/</code>rmanpwd@aliascatalog target <code class="pl-sql_operator">/</code> 
+Recovery Manager: <code class="pl-sql_keyword1">Release</code> <code class="pl-sql_digit">9</code>.<code class="pl-sql_digit">2</code>.<code class="pl-sql_digit">0</code>.<code class="pl-sql_digit">1</code>.<code class="pl-sql_digit">0</code> <code class="pl-sql_operator">-</code> 64bit Production
+ 
+Copyright <code class="pl-sql_operator">(</code>c<code class="pl-sql_operator">)</code> <code class="pl-sql_digit">1995</code>, <code class="pl-sql_digit">2002</code>, Oracle Corporation.  <code class="pl-sql_keyword1">All</code> rights reserved.
+ 
+connected <code class="pl-sql_keyword1">to</code> target <code class="pl-sql_keyword1">database</code>: DB1 <code class="pl-sql_operator">(</code>DBID<code class="pl-sql_operator">=</code><code class="pl-sql_digit">1966171371</code><code class="pl-sql_operator">)</code>
+connected <code class="pl-sql_keyword1">to</code> recovery catalog <code class="pl-sql_keyword1">database</code>
+ 
+RMAN<code class="pl-sql_operator">&gt;</code> register <code class="pl-sql_keyword1">database</code>; 
+ 
+<code class="pl-sql_keyword1">database</code> registered <code class="pl-sql_keyword1">in</code> recovery catalog
+<code class="pl-sql_keyword1">starting</code> <code class="pl-sql_keyword1">full</code> resync <code class="pl-sql_keyword1">of</code> recovery catalog
+<code class="pl-sql_keyword1">full</code> resync complete</code></pre></div>
+          <p>Lors de l'enregistrement, RMAN affecte un DBid unique à la base de données cible afin de garantir la cohérence du catalogue et des sauvegardes à venir.<br>
+		RMAN enregistre également lors du «&nbsp;register&nbsp;» les informations relatives à la bonne sauvegarde de cette base (fichiers à sauvegarder, emplacements, etc.), informations récupérées des fichiers de contrôle. En outre, RMAN effectue aussi une resynchronisation entre les fichiers de contrôle de la base de données cible et son catalogue. </p>
+        </div>
+        
+		<h4 class="TitreSection2" id="LIII-C-2">III-C-2. Sauvegarde de la base de données<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h4><div class="BlocSection2">
+          
+          <p>Le script donné ci-dessous est donné à titre d'exemple et permet de faire une sauvegarde FULL d'une base en mode ARCHIVELOG sur disque.<br></p>
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e938">Sauvegarde de la base de données cible<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e938" onclick="selectionCode(&#39;contenuCoded0e938&#39;, &#39;IdTitreCode-d0e938&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e938" class="contenuCode">$rman catalog rman<code class="pl-sql_operator">/</code>rmanpwd@aliascatalog target <code class="pl-sql_operator">/</code>
+Recovery Manager: <code class="pl-sql_keyword1">Release</code> <code class="pl-sql_digit">9</code>.<code class="pl-sql_digit">2</code>.<code class="pl-sql_digit">0</code>.<code class="pl-sql_digit">1</code>.<code class="pl-sql_digit">0</code> <code class="pl-sql_operator">-</code> 64bit Production
+ 
+Copyright <code class="pl-sql_operator">(</code>c<code class="pl-sql_operator">)</code> <code class="pl-sql_digit">1995</code>, <code class="pl-sql_digit">2002</code>, Oracle Corporation.  <code class="pl-sql_keyword1">All</code> rights reserved.
+ 
+connected <code class="pl-sql_keyword1">to</code> target <code class="pl-sql_keyword1">database</code>: DB1 <code class="pl-sql_operator">(</code>DBID<code class="pl-sql_operator">=</code><code class="pl-sql_digit">1966171371</code><code class="pl-sql_operator">)</code>
+connected <code class="pl-sql_keyword1">to</code> recovery catalog <code class="pl-sql_keyword1">database</code>
+ 
+RMAN<code class="pl-sql_operator">&gt;</code><code class="pl-sql_keyword1">run</code> {
+    allocate <code class="pl-sql_keyword1">channel</code> t1 <code class="pl-sql_keyword1">type</code> <code class="pl-sql_keyword1">disk</code>;
+    <code class="pl-sql_keyword1">backup</code> <code class="pl-sql_keyword1">format</code> <code class="pl-sql_literal1">'/filesbkp/DB1/df_%d_%t_%s_%p'</code> <code class="pl-sql_keyword1">database</code>;
+    <code class="pl-sql_keyword1">sql</code> <code class="pl-sql_literal1">'alter system switch logfile'</code>;
+    <code class="pl-sql_keyword1">backup</code> <code class="pl-sql_keyword1">format</code> <code class="pl-sql_literal1">'/filesbkp/DB1/al_%d_%t_%s_%p'</code>
+    archivelog <code class="pl-sql_keyword1">all</code> <code class="pl-sql_keyword1">delete</code> input;
+    <code class="pl-sql_keyword1">backup</code> <code class="pl-sql_keyword1">format</code> <code class="pl-sql_literal1">'/filesbkp/DB1/ctl_%d_%t_%s_%p'</code> <code class="pl-sql_keyword1">current</code> controlfile;
+    }</code></pre></div>
+          <p>On alloue un canal de type <b>Disk</b> pour effectuer la sauvegarde. Ensuite on sauvegarde l'ensemble de la base de données dans des librairies (backupsets) avec le format donné par les paramètres en %x dans le répertoire <b>/filesbkp/DB1/</b>.<br>
+		On change de redo log afin de provoquer un archivage du log courant.<br>
+		On sauvegarde l'ensemble des archives logs utiles dans <b>/filesbkp/DB1</b> sous le format al… afin de pouvoir les différencier des librairies des fichiers de données (dfxxx).<br>
+		Enfin on sauvegarde un fichier de contrôle. <br></p>
+        </div>
+      </div>
+      
+		<h3 class="TitreSection1" id="LIII-D">III-D. Première restauration de base de données avec RMAN<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h3><div class="BlocSection1">
+        
+        <p>Le script donné ci-dessous n'est qu'un exemple permettant de restaurer une base de données complète à partir de la dernière sauvegarde valide et de réappliquer les logs (archive et redo) jusqu'au moment du plantage. Il prend comme hypothèse de n'avoir perdu ni les redo logs ni les fichiers de contrôle. De plus, la base cible doit être en mode MOUNT.<br><br></p>
+        <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e1095">Exemple de script de restauration complète<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e1095" onclick="selectionCode(&#39;contenuCoded0e1095&#39;, &#39;IdTitreCode-d0e1095&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e1095" class="contenuCode">$rman catalog rman<code class="pl-sql_operator">/</code>rmanpwd@aliascatalog target <code class="pl-sql_operator">/</code>
+Recovery Manager: <code class="pl-sql_keyword1">Release</code> <code class="pl-sql_digit">9</code>.<code class="pl-sql_digit">2</code>.<code class="pl-sql_digit">0</code>.<code class="pl-sql_digit">1</code>.<code class="pl-sql_digit">0</code> <code class="pl-sql_operator">-</code> 64bit Production
+ 
+Copyright <code class="pl-sql_operator">(</code>c<code class="pl-sql_operator">)</code> <code class="pl-sql_digit">1995</code>, <code class="pl-sql_digit">2002</code>, Oracle Corporation.  <code class="pl-sql_keyword1">All</code> rights reserved.
+ 
+connected <code class="pl-sql_keyword1">to</code> target <code class="pl-sql_keyword1">database</code>: DB1 <code class="pl-sql_operator">(</code>DBID<code class="pl-sql_operator">=</code><code class="pl-sql_digit">1966171371</code><code class="pl-sql_operator">)</code>
+connected <code class="pl-sql_keyword1">to</code> recovery catalog <code class="pl-sql_keyword1">database</code>
+ 
+RMAN<code class="pl-sql_operator">&gt;</code><code class="pl-sql_keyword1">Run</code> {
+    allocate <code class="pl-sql_keyword1">channel</code> t1 <code class="pl-sql_keyword1">type</code> <code class="pl-sql_keyword1">disk</code>;
+    <code class="pl-sql_keyword1">restore</code> <code class="pl-sql_keyword1">database</code>;
+    <code class="pl-sql_keyword1">recover</code> <code class="pl-sql_keyword1">database</code>;
+    <code class="pl-sql_keyword1">sql</code> <code class="pl-sql_literal1">"alter database open"</code>;
+}</code></pre></div>
+        <p>De la même façon que précédemment, on alloue un canal de type <b>disk</b>. On restaure la base de données. Étant donné qu'il n'y a aucun paramètre complémentaire, RMAN prend la dernière sauvegarde valide. Ensuite on applique un <b>recover</b> ayant pour effet de réappliquer l'ensemble des archives et des redo logs actifs. Et enfin on ouvre la base pour la rendre disponible à nouveau.<br><br>
+		On peut envisager de faire une restauration à chaud d'un tablespace de données en faisant comme suit&nbsp;: </p>
+        <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e1206">Exemple de script de restauration de tablespace à chaud<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e1206" onclick="selectionCode(&#39;contenuCoded0e1206&#39;, &#39;IdTitreCode-d0e1206&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e1206" class="contenuCode">$rman catalog rman<code class="pl-sql_operator">/</code>rmanpwd@aliascatalog target <code class="pl-sql_operator">/</code>
+Recovery Manager: <code class="pl-sql_keyword1">Release</code> <code class="pl-sql_digit">9</code>.<code class="pl-sql_digit">2</code>.<code class="pl-sql_digit">0</code>.<code class="pl-sql_digit">1</code>.<code class="pl-sql_digit">0</code> <code class="pl-sql_operator">-</code> 64bit Production
+ 
+Copyright <code class="pl-sql_operator">(</code>c<code class="pl-sql_operator">)</code> <code class="pl-sql_digit">1995</code>, <code class="pl-sql_digit">2002</code>, Oracle Corporation.  <code class="pl-sql_keyword1">All</code> rights reserved.
+ 
+connected <code class="pl-sql_keyword1">to</code> target <code class="pl-sql_keyword1">database</code>: DB1 <code class="pl-sql_operator">(</code>DBID<code class="pl-sql_operator">=</code><code class="pl-sql_digit">1966171371</code><code class="pl-sql_operator">)</code>
+connected <code class="pl-sql_keyword1">to</code> recovery catalog <code class="pl-sql_keyword1">database</code>
+ 
+RMAN<code class="pl-sql_operator">&gt;</code><code class="pl-sql_keyword1">Run</code> {
+    <code class="pl-sql_keyword1">sql</code> <code class="pl-sql_literal1">"alter tablespace TBS_DATA offline"</code>;
+    allocate <code class="pl-sql_keyword1">channel</code> t1 <code class="pl-sql_keyword1">type</code> <code class="pl-sql_keyword1">disk</code>;
+    <code class="pl-sql_keyword1">restore</code> <code class="pl-sql_keyword1">tablespace</code> TBS_DATA;
+    <code class="pl-sql_keyword1">recover</code> <code class="pl-sql_keyword1">tablespace</code> TBS_DATA;
+    <code class="pl-sql_keyword1">sql</code> <code class="pl-sql_literal1">"alter tablespace TBS_DATA online;"</code>;
+}</code></pre></div>
+        <p>Il faut mettre le tablespace <b>offline</b> avant de pouvoir le restaurer. Ensuite on le restaure et on le remet <b>online</b>.<br>
+		Les différents types de restauration sont très nombreux, on peut restaurer uniquement un fichier, ou des archives logs, etc. </p>
+      </div>
+    </div>
+    
+		<h2 class="TitreSection0" id="LIV">IV. Bibliographie<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h2><div class="BlocSection0">
+      
+      <ul class="ListeDVP">
+        <li>Oracle 9i&nbsp;: RMAN Backup et Recovery (R. G. Freeman Edition Oracle Press)</li>
+        <li><a class="lienArticle En" href="http://download-west.oracle.com/docs/cd/B10501_01/server.920/a96564.pdf">Recovery Manager Quick Reference</a> (Documentation Oracle)</li>
+        <li><a class="lienArticle En" href="http://download-uk.oracle.com/docs/cd/B10501_01/server.920/a96565.pdf">Recovery Manager Reference</a> (Documentation Oracle)</li>
+        <li><a class="lienArticle En" href="http://download-uk.oracle.com/docs/cd/B10501_01/server.920/a96566.pdf">Recovery Manager User Guide</a> (Documentation Oracle)</li>
+      </ul>
+    </div>
+    
+		<h2 class="TitreSection0" id="Lno-V">Remerciements<a class="HautPage" href="https://oracle.developpez.com/guide/sauvegarde/rman/#" title="Haut de page">▲</a></h2><div class="BlocSection0">
+      
+      <p>Je tiens à remercier toute l'équipe de Developpez.com pour son aide dans la relecture et l'amélioration du présent tutoriel, en particulier Beuss et Pomalaix pour la correction de l'orthographe. </p>
+    </div>
+  </section><section class="articleBody"><p>Vous avez aimé ce tutoriel&nbsp;? Alors partagez-le en cliquant sur les boutons suivants&nbsp;: <a title="Viadeo" href="http://www.viadeo.com/shareit/share/?url=https%3A%2F%2Foracle.developpez.com%2Fguide%2Fsauvegarde%2Frman%2F&amp;Title=Pr%C3%83%C2%A9sentation+de+l%27outil+RMAN+d%27Oracle" rel="nofollow"><img alt="Viadeo" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/kitbm-viadeo.png"></a>&nbsp;<a title="Twitter" href="http://twitter.com/timeline/home?status=https%3A%2F%2Foracle.developpez.com%2Fguide%2Fsauvegarde%2Frman%2F" rel="nofollow"><img alt="Twitter" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/kitbm-twitter.png"></a>&nbsp;<a title="Facebook" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Foracle.developpez.com%2Fguide%2Fsauvegarde%2Frman%2F" rel="nofollow"><img alt="Facebook" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/kitbm-facebook.png"></a>&nbsp;<a title="Google +" href="https://plus.google.com/share?url=https%3A%2F%2Foracle.developpez.com%2Fguide%2Fsauvegarde%2Frman%2F" onclick="javascript:window.open(this.href, &#39;&#39;, &#39;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&#39;);return false;"><img src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/gplus-16.png" alt="Share on Google+"></a>&nbsp;<script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/in.js.download">lang: fr_FR</script>
+			<span class="IN-widget" data-lnkd-debug="&lt;script type=&quot;IN/Share+init&quot; data-url=&quot;$url&quot;&gt;&lt;/script&gt;" style="display: inline-block; line-height: 1; vertical-align: bottom; padding: 0px; margin: 0px; text-indent: 0px; text-align: center;"><span style="padding: 0px !important; margin: 0px !important; text-indent: 0px !important; display: inline-block !important; vertical-align: bottom !important; font-size: 1px !important;"><button class="IN-36f20d8e-4c6e-4cef-bba0-83622a7a0637-1G9ISYhSF8XoOmdcl0yKDu"><xdoor-icon aria-hidden="true"><svg viewBox="0 0 24 24" width="24px" height="24px" x="0" y="0" preserveAspectRatio="xMinYMin meet">
+      <g style="fill: currentColor">
+        <rect x="-0.003" style="fill:none;" width="24" height="24"></rect>
+        <path style="" d="M20,2h-16c-1.1,0-2,0.9-2,2v16c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2zM8,19h-3v-9h3V19zM6.5,8.8C5.5,8.8,4.7,8,4.7,7s0.8-1.8,1.8-1.8S8.3,6,8.3,7S7.5,8.8,6.5,8.8zM19,19h-3v-4c0-1.4-0.6-2-1.5-2c-1.1,0-1.5,0.8-1.5,2.2V19h-3v-9h2.9v1.1c0.5-0.7,1.4-1.3,2.6-1.3c2.3,0,3.5,1.1,3.5,3.7V19z"></path>
+      </g>
+    </svg></xdoor-icon>Partager</button></span></span>&nbsp;</p></section><p class="licence">Copyright © 2005 gregory.broissard.
+Aucune reproduction, même partielle, ne peut être faite
+de ce site ni de l'ensemble de son contenu&nbsp;: textes, documents, images, etc.
+sans l'autorisation expresse de l'auteur. Sinon vous encourez selon la loi jusqu'à
+trois ans de prison et jusqu'à 300&nbsp;000&nbsp;€ de dommages et intérêts.
+</p></div>
+
+</section>
+</article>
+		
+
+<script>
+	$(function() {
+		if ($("#gabarit_pubBB").is(":hidden"))
+			$('.contenuPage').attr('style', 'min-height:auto;padding-top:20px !important');
+	$("#gabarit_voiraussi").load("https://www.developpez.com/voiraussi/index/rubrique/25/");
+	$("#gabarit_encartemploi").load("https://www.developpez.com/ws/offres?alt=3&utf8=1");
+});
+</script>
+<img src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/compter-25" alt="" width="1" height="1" style="position: absolute; left: 1px; top: 1px">
+<img src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/0" alt="" width="1" height="1" style="position: absolute; left: 1px; top: 1px">
+<img src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/compter-25(1)" alt="" width="1" height="1" style="position: absolute; left: 1px; top: 1px">
+<script>$(function(){$("#tn25br0a").load("/template/tn25br0a"+'0'+".jpg");$("#ml25ji5x").load("/template/ml25ji5x"+'0'+".jpg");});</script>
+<style type="text/css">@media screen and (max-width: 975px) { #tn25br0a, #ml25ji5x { display:none !important; } }</style>
+</div>
+
+	</section>
+
+	<div id="gabarit_megaban_bas"><div id="ml25ji5x" class="dvpb5" style="display: inline-block; width: 728px; height: 90px"><style type="text/css">html, body { margin: 0; padding: 0; }</style><div id="75922-28"><script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/gen.js(1).download"></script><script src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/requestform.js(1).download"></script></div><style type="text/css"> #gabarit_pub5 { display: block; }</style></div><div id="gabarit_pub5"></div></div>
+	<div id="gabarit_voiraussi">					<script type="text/javascript">
+			$(function() {
+				$('#gabarit_voiraussi .gabarit_voiraussi article').hover(
+					function() {						
+						$('<div class="gabarit_voiraussi_hover" style="line-height:'+ $(this).height() +'px;"><i class="fas fa-eye"></i></div>').prependTo($(this).find('a'));
+					}, function() {
+						$('.gabarit_voiraussi_hover').remove();
+					}
+				);
+			});
+		</script>
+		<style type="text/css">
+							#gabarit_voiraussi { 
+					background: #293a4e; 
+					border: 0;	
+					-webkit-box-shadow: inset 0px 0px 7px -5px #293a4e;
+					box-shadow: inset 0px 0px 7px -5px #293a4e;
+					text-shadow: 0px 0px 1px #e4e4e4;
+				}
+						#gabarit_voiraussi { text-align:center; }
+			#gabarit_voiraussi .gabarit_voiraussi {  
+				display:inline-grid;
+				grid-gap:4px; 
+				align-items:stretch;
+				justify-items: center;
+				padding:5px 4px;
+				text-align:center;
+				grid-template-rows:max-content;
+				height:349px;
+			}
+			
+							#gabarit_voiraussi .gabarit_voiraussi { grid-template-columns: repeat(4, 1fr); }
+						
+			#gabarit_voiraussi .gabarit_voiraussi a { display:contents; font-weight:bold; font-size:13px; text-decoration:none; color:#202e3e; }
+			
+			#gabarit_voiraussi .gabarit_voiraussi article {  
+				width:100%;
+				position:relative;
+				border:1px solid #1e2c3c;
+				background: white;
+				-webkit-box-shadow: inset 0 0 2px 0 #000;
+				box-shadow: inset 0 0 2px 0 #000;
+				display: grid;
+				grid-template-rows: 200px auto;
+				justify-items: center;
+			}
+			
+			#gabarit_voiraussi .gabarit_voiraussi article a {  
+				position:relative;
+				z-index:2;
+			}
+			
+			#gabarit_voiraussi .gabarit_voiraussi .gabarit_voiraussi_hover { 
+				position:absolute;
+				top:0;
+				z-index:1;
+				width:100%;
+				height:100%;
+				cursor:pointer;
+				opacity:.5;
+				background:#97a3b1; 
+			}
+			
+			#gabarit_voiraussi .gabarit_voiraussi .gabarit_voiraussi_hover i { 
+				color:#051221; 
+				font-size:8rem; 
+				line-height:inherit; 
+				text-shadow: 0 0 2.5rem #fff;
+			}
+			
+			#gabarit_voiraussi .gabarit_voiraussi article div.image { 
+				position:relative;
+				top:1px;
+				left:0;
+				width: calc(100% - 2px); 
+				height: 200px; 
+				background-repeat: no-repeat; 
+				background-position: center center;
+				opacity:.9;				
+			}
+			
+			#gabarit_voiraussi .gabarit_voiraussi article div.texte { align-self: center; padding: 10px; padding-top:30px; }
+			
+		</style>
+		<div class="gabarit_voiraussi">
+			<article>
+	<a href="https://www.developpez.com/voiraussi/clic/i/337120/r/96856/rub/25/">
+		<div class="image" style="background-image: url(https://www.developpez.net/forums/attachments/p625961d1/x/x/x);"></div>
+		<div class="texte">Quels sont les langages de programmation que vous détestez le plus en 2022 ? Pourquoi ?</div>
+	</a>
+</article>
+
+<article>
+	<a href="https://www.developpez.com/voiraussi/clic/i/337001/r/96835/rub/25/">
+		<div class="image" style="background-image: url(https://www.developpez.net/forums/attachments/p626288d1/x/x/x);"></div>
+		<div class="texte">Oracle atteint ses objectifs de chiffre d'affaires du 1er trimestre? grâce à l'essor de Cerner et à la force du cloud, la société prévoit une croissance comprise entre 21 % et 23 % au 2e trimestre</div>
+	</a>
+</article>
+
+<article>
+	<a href="https://www.developpez.com/voiraussi/clic/i/337006/r/96837/rub/25/">
+		<div class="image" style="background-image: url(https://www.developpez.net/forums/attachments/p626300d1/x/x/x);"></div>
+		<div class="texte">Oracle accepte de payer plus de 23 Ms $ pour régler les accusations de corruption formulées par la SEC</div>
+	</a>
+</article>
+
+<article>
+	<a href="https://www.developpez.com/voiraussi/clic/i/318400/r/92968/rub/25/">
+		<div class="image" style="background-image: url(https://www.developpez.com/images/logos/90x90/sgbd.png);"></div>
+		<div class="texte">Apprendre comment interroger une base MariaDB depuis Oracle, un billet blog de CinePhil</div>
+	</a>
+</article>
+
+		</div>
+	
+</div>
+	<div id="gabarit_encartemploi_desactive"></div>
+
+	<footer>
+
+	<div id="gabarit_responsable">
+				<a href="https://club.developpez.com/contacts/contribuer">Contacter</a> le responsable de la rubrique Oracle
+			</div>
+
+	<ul id="gabarit_pied">
+		<li><a href="https://club.developpez.com/contacts/">Nous contacter</a>
+		</li><li><a href="https://www.developpez.com/participez/">Participez</a>
+	</li><li><a href="https://www.developpez.com/hebergement/">Hébergement</a>
+	</li><li><a href="https://www.developpez.com/advertising/">Publicité / Advertising</a>
+	</li><li><a href="https://www.developpez.com/legal/">Informations légales</a>
+			</li><li>Partenaire : <a href="https://www.planethoster.com/fr/" target="_blank" rel="noopener">Hébergement Web</a>
+		</li></ul>
+
+<p id="gabarit_copyright">© 2000-2022 - www.developpez.com</p>
+
+
+	</footer>
+<!-- Google Analytics general -->
+<script>
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28115938-1']);
+  _gaq.push(['_setDomainName', 'developpez.com']);
+  _gaq.push(['_setCustomVar', 1, 'rubrique', 'oracle', 3]);
+  _gaq.push(['_setCustomVar', 2, 'type', 'Autre', 3]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+	var ga = document.createElement('script'); ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+
+
+		<div id="lightboxOverlay" tabindex="-1" class="lightboxOverlay" style="display: none;"></div><div id="lightbox" tabindex="-1" class="lightbox" style="display: none;"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt=""><div class="lb-nav"><a class="lb-prev" aria-label="Previous image" href="https://oracle.developpez.com/guide/sauvegarde/rman/"></a><a class="lb-next" aria-label="Next image" href="https://oracle.developpez.com/guide/sauvegarde/rman/"></a></div><div class="lb-loader"><a class="lb-cancel"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"></a></div></div></div></div><div style="display: none" class="ubey-RecordingScreen-count-down ubey-RecordingScreen-count-down-container">
+    <style>
+        .ubey-RecordingScreen-count-down-container {
+            position: fixed;
+            height: 100vh;
+            width: 100vw;
+            top: 0;
+            left: 0;
+            z-index: 9999999999999;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .ubey-RecordingScreen-count-down-content {
+            position: absolute;
+            display: flex;
+            top: 50%;
+            left: 50%;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            height: 15em;
+            width: 15em;
+            transform: translate(-50%, -100%);
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+        }
+
+        #ubey-RecordingScreen-count-count {
+            font-size: 14em;
+            transform: translateY(-2%);
+        }
+    </style>
+    <div class="ubey-RecordingScreen-count-down-content">
+        <span id="ubey-RecordingScreen-count-count"></span>
+    </div>
+</div></body><iframe id="google_esf" name="google_esf" src="./Présentation de l&#39;outil RMAN d&#39;Oracle._files/zrt_lookup.html" style="display: none;"></iframe></html>

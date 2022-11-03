@@ -1,0 +1,37 @@
+class Search {
+  constructor($el, $toggle) {
+    this.$el = $el
+    this.$toggle = $toggle
+    this.isActive = false
+    this.toggle = this.toggle.bind(this)
+    this.$toggle.addEventListener('click', this.toggle)
+  }
+
+  toggle() {
+    this.isActive = !this.isActive
+
+    if (this.isActive) {
+      this.$el.classList.add('is-active')
+      this.$toggle.classList.add('is-active')
+    } else {
+      this.$el.classList.remove('is-active')
+      this.$toggle.classList.remove('is-active')
+    }
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  // Add event listener for the rsalink namespace
+	const $rsalinkSearch = document.querySelector('.rsalink-c-search-bar')
+  const $rsalinkToggle = document.querySelector('.rsalink-c-search-bar__toggle')
+  if ($rsalinkSearch && $rsalinkToggle) {
+    new Search($rsalinkSearch, $rsalinkToggle)
+  }
+
+	// Add event listener for the rsa namespace
+	const $rsaSearch = document.querySelector('.rsa-c-search-bar')
+  const $rsaToggle = document.querySelector('.rsa-c-search-bar__toggle')
+  if ($rsaSearch && $rsaToggle) {
+    new Search($rsaSearch, $rsaToggle)
+  }
+})

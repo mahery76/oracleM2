@@ -1,0 +1,79 @@
+class Dropdown {
+  constructor($el) {
+    this.$el = $el
+    this.getMinHeight = this.getMinHeight.bind(this)
+    this.setMinHeight = this.setMinHeight.bind(this)
+    this.hide = this.hide.bind(this)
+    this.show = this.show.bind(this)
+
+    this.show()
+    this.setMinHeight(
+      this.getMinHeight()
+    )
+    this.hide()
+  }
+
+  getMinHeight() {
+    let minHeight = 0
+
+    for (let i = 0; i < this.$el.children.length; i++) {
+      if ('LI' === this.$el.children[i].tagName) {
+        let $li = this.$el.children[i]
+
+        for (let j = 0; j < $li.children.length; j++) {
+          if ('UL' === $li.children[j].tagName) {
+            let $ul = $li.children[j]
+
+            if ($ul.offsetHeight > minHeight) {
+              minHeight = $ul.offsetHeight
+            }
+          }
+        }
+      }
+    }
+
+    return minHeight
+  }
+
+  setMinHeight(minHeight) {
+    this.$el.style.minHeight = `${minHeight}px`
+  }
+
+  hide() {
+    this.$el.style.display = null
+
+    const $ul = this.$el.querySelectorAll('ul')
+
+    for (let i = 0; i < $ul.length; i++) {
+      $ul[i].style.display = null
+    }
+  }
+
+  show() {
+    this.$el.style.display = 'block'
+
+    const $ul = this.$el.querySelectorAll('ul')
+
+    for (let i = 0; i < $ul.length; i++) {
+      $ul[i].style.display = 'block'
+    }
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  // Add event listener for the rsalink namespace
+	const rsalinkDropdowns = document.querySelectorAll('.rsalink-l-header__primary > ul > li > ul')
+  if (rsalinkDropdowns) {
+    for (let i = 0; i < rsalinkDropdowns.length; i++) {
+      new Dropdown(rsalinkDropdowns[i])
+    }
+  }
+
+	// Add event listener for the rsa namespace
+	const rsaDropdowns = document.querySelectorAll('.rsa-l-header__primary > ul > li > ul')
+  if (rsaDropdowns) {
+    for (let i = 0; i < rsaDropdowns.length; i++) {
+      new Dropdown(rsaDropdowns[i])
+    }
+  }
+})

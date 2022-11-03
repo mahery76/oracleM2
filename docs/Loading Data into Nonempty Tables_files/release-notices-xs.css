@@ -1,0 +1,195 @@
+.release-notices-container {
+  display: flex !important;
+  width: 100%;
+  position: relative;
+  z-index: 9;
+  top: 56px;
+}
+
+.release-notices-css {
+  display: flex !important;
+  width: 100%;
+  min-height: 58px;
+  line-height: 51px;
+  border: 1px solid #A47638;
+  background-color: #FACD62;
+  border-color: transparent;
+  justify-content: center;
+  align-items: center;
+}
+
+.release-notices-css .img-warning {
+  background: url("images/oj-ux-ico-warning-s.svg");
+  width: 24px;
+  height: 24px;
+}
+
+.release-notices-css .release-text {
+  min-width: 800px;
+  max-width: 1100px;
+  color: #312D2A;
+  font-family: "Oracle Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 16px;
+  word-wrap: break-word;
+  padding-top: 5px;
+} 
+
+.release-notices-css .button-integration {
+  min-height: 28px;
+  min-width: 175px;
+  color: #FFFFFF;
+  font-family: "Oracle Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 16px;
+  text-align: center;
+  background-color: #2C2926;
+  border-radius: 4px;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-left-width: 0px;
+  border-bottom-width: 0px;
+  box-shadow: none;
+  text-shadow: none;
+  padding-top: 1px;
+  padding-bottom: 0px;
+}
+
+.release-notices-css .button-integration:hover {
+  background-color: #3B3733;
+}
+
+.release-notices-css .button-integration:active {
+  background-color: #4A4540;
+}
+
+.release-notices-css .button-integration:focus {
+  background-color: #3B3733;
+  border-color: #161513;
+  outline: 2px dotted #161513 !important;
+}
+
+.release-notices-css .button-close {
+  min-height: 28px;
+  min-width: 115px;
+  color: #161513;
+  font-family: "Oracle Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 16px;
+  text-align: center;
+  border-radius: 4px;
+  background-color: #FACD62;
+  border: 1px solid rgba(22,21,19,0.7);
+  box-shadow: none;
+  text-shadow: none;
+  padding-top: 1px;
+  padding-bottom: 0px;
+}
+
+.release-notices-css .button-close:hover {
+  background:  rgba(22,21,19,0.04);
+}
+
+.release-notices-css .button-close:active {
+  background:  rgba(22,21,19,0.06);
+}
+
+.release-notices-css .button-close:focus {
+  background:  rgba(22,21,19,0.04);
+  border-color: #161513;
+  outline: 2px dotted #161513 !important;
+}
+
+.release-notices-css .space-max {
+  margin-left: 24px;
+}
+
+.release-notices-css .space-min {
+  margin-left: 0px;
+}
+
+.release-notices-css .div-aux,
+.release-notices-css .div-aux-buttons {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 1599px) {
+  .release-notices-css .release-text {
+      min-width: 500px;
+  }
+  .release-notices-css .space-aux {
+      margin-left: 24px;
+  }
+}
+@media only screen and (max-width: 1023px) {
+  .release-notices-css {
+      min-height: 50px;
+  }
+  .release-notices-css .release-text {
+      min-width: 350px;
+      font-size: 12px;
+  }
+  .release-notices-css .space-aux, 
+  .release-notices-css .space-max {
+      margin-left: 12px;
+  }
+  .release-notices-css .button-integration {
+      font-size: 10px;
+      min-width: 135px;
+  }
+  .release-notices-css .button-close {
+      font-size: 10px;
+      min-width: 100px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .release-notices-css {
+      display: grid !important;
+      display: -ms-grid !important;
+      -ms-grid-columns: 1fr;
+      min-height: 68px;
+      background-color: #FACD62;
+      text-align: center;
+  }
+  .release-notices-css .release-text {
+      font-size: 10px;
+      line-height: 12px;
+      min-width: 300px;
+  }
+  .release-notices-css .div-aux {
+      margin: 8px 24px 8px 24px;
+      -ms-grid-column: 1;
+      -ms-grid-row: 1;
+  }
+  .release-notices-css .div-aux .space-max {
+      margin-left: 12px;
+  }
+  .release-notices-css .div-aux-buttons {
+      margin-bottom: 8px;
+      -ms-grid-column: 1;
+      -ms-grid-row: 2;
+  }
+  .release-notices-css .button-integration {
+    min-height: 20px;
+  }
+  .release-notices-css .button-close {
+      min-height: 20px;
+  }
+}
+@media only screen and (max-width: 499px) {
+  .release-notices-css .release-text {
+      min-width: 150px;
+  }
+}
+@media only screen and (max-width: 407px) {
+  .release-notices-container {
+    top: 80px;
+  }
+}

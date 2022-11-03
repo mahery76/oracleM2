@@ -1,0 +1,23 @@
+;(function($LITH) {
+
+	LITHIUM.SurveyPromptDialog = function(params) {
+		var optIn = false;
+
+		$LITH(params.acceptSurveyLinkSelector).click(function() {
+			optIn = true;
+			$LITH(this).trigger(params.lightboxCloseEvent);
+		});
+
+		$LITH(params.declineSurveyLinkSelector).click(function(event) {
+			event.preventDefault();
+			$LITH(this).trigger(params.lightboxCloseEvent);
+		});
+
+
+		$LITH(document).one(params.beforeLightboxCloseEvent, function(event) {
+			$LITH(params.containerSelector).trigger(params.createCookieEvent,{ optIn : optIn , surveySessionId: params.surveySessionId,  surveyId: params.surveyId,  surveyType: params.surveyType });
+        });
+	}
+
+})(LITHIUM.jQuery);
+

@@ -1,0 +1,301 @@
+var identification;
+var UID;
+
+$(function() {
+	
+	var gc = $('#gabarit_connexion');
+	var gc_ok = $('#gabarit_connecter');
+	
+	var validationEnCours = false;
+	
+	var gabarit_btnProfil = $('[role="gabarit-profil"]');
+	var gabarit_btnConnecter = $('[role="gabarit-connecter"]');
+	var gabarit_btnContact = $('[role="gabarit-contacts"]');
+	var gabarit_btnRecherche = $('[role="gabarit-recherche"]');
+	
+	var gabarit_conLoading = gc.find("div#loadingConnexion");
+	var gabarit_conUser = gc.find("input#formloginConnexion");
+	var gabarit_conPwd = gc.find("input#formpassConnexion");
+	var gabarit_conBtn = gc.find("input#formbuttonConnexion");
+	
+	verifierConnexion();
+	
+	function reset_menu() {
+		gc.hide();
+		
+		if (identification) 
+			recupererUser();
+			
+		else {
+			gabarit_btnConnecter.addClass('dn');
+			gabarit_btnConnecter.find('span').html('');
+			gabarit_btnProfil.removeClass('open');
+			gabarit_btnProfil.removeClass('dn');
+			$('#gabarit-new-logo').css('width', '200px');
+			$('#gabarit-new-logo span.dvp').show();	
+		}
+				
+		gabarit_btnRecherche.show();
+		gabarit_btnContact.show();
+	}
+
+	var gabarit_b1 = $('#gabarit_b1');
+    $(document.body).click(function(e) {
+        if(!$(e.target).is(gabarit_b1)&&!$.contains(gabarit_b1[0],e.target)) {
+            $('#gabarit_recherche .gabarit-btn-menu.recherche').removeClass('open');
+            gabarit_btnProfil.removeClass('open');
+			$('#gabarit-barreRecherche').hide();
+			reset_menu();
+        }
+    });
+	
+	gabarit_btnContact.on('click', function() {
+		window.location.href='https://club.developpez.com/contacts/';
+	});
+	
+	gabarit_btnRecherche.on('click', function() { 
+		if ($(this).hasClass('open')) {
+			$(this).removeClass('open');
+			$('#gabarit-barreRecherche').hide();
+			reset_menu();
+			
+		} else {
+			$(this).addClass('open');
+			gabarit_btnConnecter.addClass('dn');
+			gabarit_btnProfil.removeClass('open');
+			gabarit_btnProfil.addClass('dn');
+			gabarit_btnContact.hide();
+			$('#gabarit-barreRecherche').show();
+			$('#gabarit-barreRecherche form input[type="text"]').focus();
+		}
+	});
+	
+	gabarit_btnProfil.on('click', function() { 
+		if ($(this).hasClass('open')) {
+			$(this).removeClass('open');
+			$('#gabarit-barreRecherche').hide();
+			reset_menu();
+			
+		} else {
+			$(this).addClass('open');
+			gabarit_btnRecherche.hide();
+			gabarit_btnContact.hide();
+			
+			if (identification)
+				gc_ok.show();
+			else {
+				$('#gabarit-new-logo').css('width', 0);
+				$('#gabarit-new-logo span.dvp').hide();
+				gc.show();
+			}
+		}
+	});
+	
+	gabarit_btnConnecter.on('click', function() { gabarit_deco(); });
+	
+	loggingFormConnexion();
+	
+	
+	/* REDIMENSSIONNEMENT DU CONTENU */		
+	$(window).on('load', function() { initialiserContenu(); });
+
+	$(window).on('resize', function() { initialiserContenu(); });
+	
+	function initialiserContenu() { 
+		var hauteurFenetre = window.innerHeight;
+		var header = $('header').outerHeight() + $('#gabarit_pubBB').outerHeight();
+		var footer = $("#gabarit_voiraussi").outerHeight() + $("footer").outerHeight();	
+		var contenuPage = $(".contenuPage").outerHeight();
+		
+		var hauteurContenuTotal = header + footer + contenuPage;
+
+		if (hauteurFenetre > hauteurContenuTotal) {
+			var difference = hauteurFenetre - hauteurContenuTotal;
+			$(".contenuPage").css('min-height', contenuPage + difference + 'px');
+		} else
+			$(".contenuPage").css('min-height', 'auto');
+	}
+	
+	/**** STOP SCROLL ****/
+	function stopScrollBody(actif) {
+		if (actif) {			
+			$('body').attr('data-off', 'true');
+			$('body').prepend('<div id="bodyHidden"></div>');			
+		} else {			
+			$('body').removeAttr('data-off');
+			$('#bodyHidden').remove();			
+		}
+	}
+	
+	/**** CONNECTER ? ****/	
+	function verifierConnexion() {
+	
+		identification = false;
+		
+		var p = "logged_in";
+		var n = "" + document.cookie;
+		var o = n.indexOf(p);
+		if (o == -1) {
+			gabarit_btnProfil.removeClass('dn');
+			return "";
+		}
+		
+		var e = n.indexOf(";", o);
+		if (e == -1)
+			e = n.length;
+		
+		var retour = unescape(n.substring(o + p.length + 1, e));
+		
+		if (retour != "") {
+			identification = true;	
+			recupererUser();
+		} else 
+			gabarit_btnProfil.removeClass('dn');
+	}
+	
+	function recupererUser() {
+		var p = "logged_in";
+		var n = "" + document.cookie;
+		var session = "PHPSESSID";
+		var o = n.indexOf(session);
+		if (o == -1)
+			return "";
+		
+		var e = n.indexOf(";", o);
+		if (e == -1)
+			e = n.length;
+		
+		var tab = { logged: true };
+		
+		tab.session = unescape(n.substring(o + p.length + 1, e));
+		
+		$.post("/user/logged", tab, function(p) {
+			if( p.userid > 0) {
+				UID = p.userid;
+				var avatar = '';
+				if (p.HAS_AVATAR !== null)
+					var avatar = '<img src="https://www.developpez.net/forums/image.php?u='+ UID +'" />';
+				gabarit_btnConnecter.find('span').html(avatar + '<a href="https://www.developpez.net/forums/u' + p.userid + '/' + p.username + '">' + p.username + '</a>');
+				gabarit_btnConnecter.removeClass('dn');	
+				gabarit_btnProfil.addClass('dn');
+				gabarit_btnProfil.removeClass('open');
+			}
+		});
+	}
+	
+	/**** CONNEXION/DECONNEXIO ****/
+	function gabarit_deco() {		
+		var f = {};
+		f.d = (new Date()).getTime();
+		f.smartphone = 'true';
+		
+		var deconnexionEnCours = true;
+		
+		$.post("/user/logout", f, function(p) {
+			
+			identification = false;
+			deconnexionEnCours = false;
+			
+			reset_menu();
+			
+			var s = document.createElement('script');
+			s.src = 'https://www.developpez.net/forums/anologout.php';
+			s.type = 'text/javascript';
+			document.body.appendChild(s);
+			
+			$('#LoginBox').hide();			
+			
+		});
+	}
+	
+	function loggingFormConnexion() { 
+		gabarit_conBtn.on('click', validerConnexion);	
+		gabarit_conPwd.keypress(function(n) { 
+			if (n.keyCode == 13)
+				validerConnexion();
+		});
+	}
+	
+	function boxBtnConnexion(actif) {
+		if (actif)
+			gabarit_conBtn.addClass('actif').val('Connexion en cours... ');
+		else
+			gabarit_conBtn.removeClass('actif').val('Connexion');
+	}
+	
+	function validerConnexion() {
+		
+		if (validationEnCours)
+			return
+		
+		if (gabarit_conLoading.is("visible"))
+			return
+		
+		var n = gabarit_conUser.val();
+		var q = gabarit_conPwd.val();
+		if (n == "" || q == "") {
+			alert("Veuillez saisir vos données de connexion");
+			return
+		}
+		
+		validationEnCours = true;
+
+		var s = {};
+		s.d = (new Date()).getTime();
+		s.username = n;
+		s.password = q;
+		s.remindme = 1;
+		
+		boxBtnConnexion(true);
+		
+		gabarit_conLoading.show();
+		
+		try { 
+		
+			$.post("/user/login", s, function(p) {
+				
+				try { 
+				
+					gabarit_conUser.val("");
+					gabarit_conPwd.val("");
+					boxBtnConnexion(false);
+					gabarit_conLoading.hide();
+					
+					if (p.state == "success") {
+						
+						identification = true;
+						recupererUser();
+						gc.hide();
+						$('#gabarit-new-logo').css('width', '200px');
+						$('#gabarit-new-logo span.dvp').show();	
+						gabarit_btnRecherche.show();
+						gabarit_btnContact.show();
+						
+						var s = document.createElement('script');
+						s.src = 'https://www.developpez.net/forums/anologin2.php?rid=' + p.rid;
+						s.type = 'text/javascript';
+						document.body.appendChild(s);
+						
+						$('#LoginBox').hide();
+						
+					} else {
+						alert(p.message);
+					}
+					
+				} catch (u) {					
+					alert("Erreur, Impossible de se connecter");
+				}
+				
+				validationEnCours = false;
+				
+			});
+			
+		} catch (o) {
+			
+			alert("Erreur, impossible de se connecter");
+			validationEnCours = false;
+			
+		}
+	}
+	
+});
