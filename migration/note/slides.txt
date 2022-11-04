@@ -1,0 +1,5 @@
+migration entre oracle
+methode de migration
+creation de la base de donnees
+essai avec datapump
+exportation

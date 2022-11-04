@@ -1,9 +1,14 @@
+select * from dba_data_files;
+
 CREATE TABLESPACE migration 
 datafile 'migration.dbf'
 SIZE 2M;
 
 CREATE TEMPORARY TABLESPACE temp_migr
 TEMPFILE 'temp_migration.dbf' SIZE 2M;
+
+-- SELECT pdb_name from dba_pdbs;
+-- alter session set container=XEPDB1;
 
 CREATE USER Mahery
 IDENTIFIED BY "test"
