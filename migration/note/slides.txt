@@ -1,6 +1,0 @@
-Difference entre oracle 11 et 19 
-migration entre oracle
-methode de migration
-essai avec datapump
-essaie avec out_data
-exportation sql avec navicat demos

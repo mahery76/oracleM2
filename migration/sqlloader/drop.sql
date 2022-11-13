@@ -1,6 +1,8 @@
 DROP TABLE Vehicule;
 DROP TABLE Ligne;
 DROP TABLE Chauffeur;
+
+-- chauf.ctl
 CREATE TABLE Chauffeur (
     NumChauff int not NULL,
     NomChauff varchar (30) unique,
@@ -8,12 +10,16 @@ CREATE TABLE Chauffeur (
     NumTel varchar (15),
     Constraint PK_Chauffeur primary key (NumChauff)
 );
+
+-- ligne.ctl
 CREATE TABLE Ligne (
     NumLigne int not null,
     NomLigne varchar(60),
     Distance varchar(10),
     Constraint PK_ligne primary key (NumLigne)
 );
+
+-- vehi.ctl
 CREATE TABLE Vehicule (
     NumVehicule int not null,
     NumChauffeur int not null,
@@ -27,5 +33,12 @@ CREATE TABLE Vehicule (
     Constraint Fk_chauffeur Foreign key (NumChauffeur) references Chauffeur (NumChauff),
     Constraint FK_ligne foreign key (Ligne) references Ligne (NumLigne)
 );
+select tablespace_name,
+    table_name
+from user_tables;
 
--- sqlldr userid=mahery/test control=chauf.ctl
+DESCRIBE Vehicule;
+
+select *
+from Vehicule;
+sqlldr userid = MAHERY/test control=chauf.ctl
