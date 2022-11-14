@@ -1,0 +1,15 @@
+- drop user 
+- drop tablespace
+- drop file.dbf
+   in C:\ORACLEXE\APP\ORACLE\PRODUCT\11.2.0\SERVER\DATABASE\MIGRATION.DBF
+- drop table 
+
+CONNNECT SYSTEM/lesdapery 
+
+SELECT pdb_name from dba_pdbs;
+alter session set container=XEPDB1;
+
+drop user MAHERY CASCADE;
+stop service OracleServiceXE
+delete file [file].dbf in 
+   in C:\ORACLEXE\APP\ORACLE\PRODUCT\11.2.0\SERVER\DATABASE\MIGRATION.DBF

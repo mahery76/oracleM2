@@ -3,6 +3,3 @@
 - drop file.dbf
    in C:\ORACLEXE\APP\ORACLE\PRODUCT\11.2.0\SERVER\DATABASE\MIGRATION.DBF
 - drop table 
-
-
-- sqlldr userid=mahery/test control='data.ctl'
